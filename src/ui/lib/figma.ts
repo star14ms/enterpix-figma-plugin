@@ -10,3 +10,19 @@ export function requestGenerateRandomQuoteToPlugin(randomQuote: Quote) {
     randomQuote,
   });
 }
+
+export function requestgenerateTypedQuoteToPlugin(text: String) {
+  requestToPlugin<PluginMessagePayload>({
+    type: 'generateTypedQuote',
+    text,
+  });
+}
+
+export function requestgenerateImageToPlugin(array: Uint8Array, width?: number, height?: number) {
+  requestToPlugin<PluginMessagePayload>({
+    type: 'generateImage',
+    array,
+    width,
+    height,
+  });
+}

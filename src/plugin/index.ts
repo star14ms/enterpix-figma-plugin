@@ -2,9 +2,14 @@ import {
   PluginAction,
   PluginCallbackFunction,
   PluginMessagePayload,
+  generateImagePayload,
+  generateRandomQuotePayload,
+  generateTypedQuotePayload,
 } from '../shared';
 
-figma.showUI(__html__);
+
+figma.showUI(__html__, { title: 'Enterpix', width: 484, height: 664 });
+
 
 async function loadFonts() {
   await figma.loadFontAsync({
@@ -13,15 +18,21 @@ async function loadFonts() {
   });
 }
 
+
 function isPayload(payload: unknown): payload is PluginMessagePayload {
   return (
     typeof payload === 'object' &&
     Object.prototype.hasOwnProperty.call(payload, 'type') &&
-    Object.prototype.hasOwnProperty.call(payload, 'randomQuote')
+    (
+      Object.prototype.hasOwnProperty.call(payload, 'randomQuote') ||
+      Object.prototype.hasOwnProperty.call(payload, 'text') ||
+      Object.prototype.hasOwnProperty.call(payload, 'array')
+    )
   );
 }
 
-function generateRandomQuote({ randomQuote }: PluginMessagePayload) {
+
+function generateRandomQuote({ randomQuote }: generateRandomQuotePayload) {
   const currentSelectionNode = figma.currentPage.selection[0];
   if (currentSelectionNode?.type === 'TEXT') {
     currentSelectionNode.fontName = {
@@ -36,10 +47,43 @@ function generateRandomQuote({ randomQuote }: PluginMessagePayload) {
   }
 }
 
+
+function generateTypedQuote({ text }: generateTypedQuotePayload) {
+  const textNode = figma.createText();
+  textNode.fontName = {
+    family: 'Roboto',
+    style: 'Regular',
+  };
+  textNode.fontSize = 32;
+  textNode.characters = `${text}`;
+  textNode.fills = [
+    { type: 'SOLID', color: { r:1, g:1, b:1 }}
+  ];
+  figma.currentPage.appendChild(textNode);
+}
+
+
+async function generateImage({ array, width, height }: generateImagePayload) {
+  const rectanglenode = figma.createRectangle();
+  if (!width || !height) {
+    width = 500
+    height = 500
+  }
+  rectanglenode.resize(width, height);
+  const imageHash = figma.createImage(array).hash;
+  rectanglenode.fills = [
+    { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
+  ];
+  figma.currentPage.appendChild(rectanglenode);
+}
+
+
 loadFonts().then(() => {
   figma.ui.onmessage = (payload: unknown) => {
     const callbackMap: Record<PluginAction, PluginCallbackFunction> = {
       generateRandomQuote,
+      generateTypedQuote,
+      generateImage,
     };
 
     if (isPayload(payload) && callbackMap[payload.type]) {
