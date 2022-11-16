@@ -12,7 +12,7 @@ export type ImageData = {
   height: number,
 };
 
-export type PluginAction =  'generateImage' | 'generateRandomQuote' | 'generateTypedQuote';
+export type PluginAction =  'generateImage';
 
 export type generateImagePayload = {
   type: PluginAction;
@@ -21,18 +21,7 @@ export type generateImagePayload = {
   height?: number,
 }
 
-export type generateRandomQuotePayload = {
-  type: PluginAction;
-  randomQuote: Quote;
-}
-
-export type generateTypedQuotePayload = {
-  type: PluginAction;
-  text: String;
-}
-
-export type PluginMessagePayload = 
-  generateImagePayload | generateRandomQuotePayload | generateTypedQuotePayload
+export type PluginMessagePayload = generateImagePayload
 
 export type PluginCallbackFunction<T = void> = (
   payload: PluginMessagePayload,

@@ -3,26 +3,20 @@ import { ImageData } from '../shared'
 import { Container, Button, Text, Input, Row, ImgCol } from './components/styled'
 import DragDropForm from './components/drag-drop-from'
 import Header from './components/header'
-import useRandomQuotes from './hooks/useRandomQuotes';
 import useText2Img from './hooks/useText2Img';
 import useImg2Img from './hooks/useImg2Img';
 import useGetImg from './hooks/useGetImg';
 import useScroll from './hooks/useScroll';
 
 import { 
-  requestGenerateRandomQuoteToPlugin, 
-  requestgenerateTypedQuoteToPlugin,
   requestgenerateImageToPlugin
 } from './lib/figma';
-import { img2Uint8Array } from './lib/utils'
 
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
-  const getRandomQuote = useRandomQuotes();
   const getImg = useGetImg();
   const getText2Img = useText2Img();
-  const getImg2Img = useImg2Img();
   const { isScrollBottom } = useScroll();
   const [prompt, setPrompt] = useState("");
 
@@ -30,17 +24,6 @@ function App() {
   const imgCol2 = useRef(null);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
-
-  const generateRandomQuote = async () => {
-    setIsLoading(true);
-    const randomQuote = await getRandomQuote();
-    requestGenerateRandomQuoteToPlugin(randomQuote);
-    setIsLoading(false);
-  };
-
-  const generateTypedQuote = async () => {
-    requestgenerateTypedQuoteToPlugin(prompt);
-  };
 
   const generateImg = async () => {
     const array = await getImg(prompt);
@@ -113,20 +96,6 @@ function App() {
     <Container>
       <Header></Header>
 
-      {/* <Row>
-        <Button onClick={generateImg}>
-          {isLoading ? 'Loading...' : 'GetImg'}
-        </Button>
-  
-        <Button onClick={generateText2Img}>
-          {isLoading ? 'Loading...' : 'Text2Img'}
-        </Button>
-  
-        <Button onClick={generateImg2Img}>
-          {isLoading ? 'Loading...' : 'Img2Img'}
-        </Button>
-      </Row> */}
-
       <Input 
         value={prompt} type='text' placeholder='What do you want?'
         onKeyPress={e => handleOnKeyPress(e)} 
@@ -141,16 +110,6 @@ function App() {
       </Row>
 
       {isLoading ? 'Loading...' : ''}
-
-      {/* <Text>Type Text and Click</Text>
-      <Button onClick={generateTypedQuote}>
-        {isLoading ? 'Loading...' : 'Typed Quote'}
-      </Button>
-
-      <Text>Select Text Node and Click</Text>
-      <Button onClick={generateRandomQuote}>
-        {isLoading ? 'Loading...' : 'Random Quote'}
-      </Button> */}
     </Container>
   );
 }

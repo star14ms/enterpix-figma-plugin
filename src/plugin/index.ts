@@ -3,8 +3,6 @@ import {
   PluginCallbackFunction,
   PluginMessagePayload,
   generateImagePayload,
-  generateRandomQuotePayload,
-  generateTypedQuotePayload,
 } from '../shared';
 
 
@@ -32,37 +30,6 @@ function isPayload(payload: unknown): payload is PluginMessagePayload {
 }
 
 
-function generateRandomQuote({ randomQuote }: generateRandomQuotePayload) {
-  const currentSelectionNode = figma.currentPage.selection[0];
-  if (currentSelectionNode?.type === 'TEXT') {
-    currentSelectionNode.fontName = {
-      family: 'Roboto',
-      style: 'Regular',
-    };
-    currentSelectionNode.characters = `${randomQuote.text} - ${
-      randomQuote.author || 'Unknown'
-    }`;
-  } else {
-    throw new Error('No text node is selected');
-  }
-}
-
-
-function generateTypedQuote({ text }: generateTypedQuotePayload) {
-  const textNode = figma.createText();
-  textNode.fontName = {
-    family: 'Roboto',
-    style: 'Regular',
-  };
-  textNode.fontSize = 32;
-  textNode.characters = `${text}`;
-  textNode.fills = [
-    { type: 'SOLID', color: { r:1, g:1, b:1 }}
-  ];
-  figma.currentPage.appendChild(textNode);
-}
-
-
 async function generateImage({ array, width, height }: generateImagePayload) {
   const rectanglenode = figma.createRectangle();
   if (!width || !height) {
@@ -81,8 +48,6 @@ async function generateImage({ array, width, height }: generateImagePayload) {
 loadFonts().then(() => {
   figma.ui.onmessage = (payload: unknown) => {
     const callbackMap: Record<PluginAction, PluginCallbackFunction> = {
-      generateRandomQuote,
-      generateTypedQuote,
       generateImage,
     };
 
