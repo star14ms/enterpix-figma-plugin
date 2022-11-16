@@ -54,10 +54,9 @@ function App() {
       const el = document.createElement('img');
       el.id = image.id
       el.src = image.compressedUrl
-      // el.crossOrigin = "Anonymous";
 
       el.addEventListener('click', async () => {
-        const array = img2Uint8Array(el.id, image.width, image.height);
+        const array = await getImg(image.compressedUrl);
         requestgenerateImageToPlugin(array, image.width, image.height)
       });
 
