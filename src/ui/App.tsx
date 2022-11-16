@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageData } from '../shared'
-import styled from 'styled-components';
-
+import { Container, Button, Text, Input, Row, ImgCol } from './components/styled'
+import DragDropForm from './components/drag-drop-from'
+import Header from './components/header'
 import useRandomQuotes from './hooks/useRandomQuotes';
 import useText2Img from './hooks/useText2Img';
 import useImg2Img from './hooks/useImg2Img';
@@ -14,68 +15,6 @@ import {
   requestgenerateImageToPlugin
 } from './lib/figma';
 import { img2Uint8Array } from './lib/utils'
-
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-`;
-
-const Button = styled.button`
-  background-color: #555;
-  color: #fff;
-  border: none;
-  padding: 10px auto;
-  border-radius: 1rem;
-  font-size: 24px;
-  transition: 0.15s;
-  width: 30%;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #191919;
-  }
-`;
-
-const Text = styled.p`
-  font-size: 24px;
-`;
-
-const Input = styled.input`
-  font-size: 24px;
-  margin-top: 8px;
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  flex-basis: auto;
-  width: 100%;
-  box-sizing: border-box;
-`;
-
-const ImgCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  box-sizing: border-box;
-  margin: 8px 8px;
-  
-  & img {
-    margin: 8px 0;
-    width: 100%;
-    transition: 0.15s;
-
-    &:hover {
-      opacity: 0.8;
-      cursor: pointer;
-    }
-  }
-`;
 
 
 function App() {
@@ -127,8 +66,8 @@ function App() {
       // el.crossOrigin = "Anonymous";
 
       el.addEventListener('click', async () => {
-        const arrayData = img2Uint8Array(el.id, image.width, image.height);
-        requestgenerateImageToPlugin(arrayData.array, arrayData.width, arrayData.height)
+        const array = img2Uint8Array(el.id, image.width, image.height);
+        requestgenerateImageToPlugin(array, image.width, image.height)
       });
 
       if (col1H > col2H) {
@@ -157,9 +96,12 @@ function App() {
     setIsLoading(false)
   };
 
-  const generateImg2Img = async () => {
-    const data = await getImg2Img(null);
-  };
+
+  const handleOnKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      await generateText2Img(); // Enter 입력이 되면 클릭 이벤트 실행
+    }
+  }
 
   useEffect(() => {
     if (isScrollBottom) {
@@ -169,7 +111,9 @@ function App() {
 
   return (
     <Container>
-      <Row>
+      <Header></Header>
+
+      {/* <Row>
         <Button onClick={generateImg}>
           {isLoading ? 'Loading...' : 'GetImg'}
         </Button>
@@ -181,10 +125,16 @@ function App() {
         <Button onClick={generateImg2Img}>
           {isLoading ? 'Loading...' : 'Img2Img'}
         </Button>
-      </Row>
+      </Row> */}
 
-      <Input value={prompt} onChange={e => setPrompt(e.target.value)} type='text' placeholder='What do you want?'></Input>
-      
+      <Input 
+        value={prompt} type='text' placeholder='What do you want?'
+        onKeyPress={e => handleOnKeyPress(e)} 
+        onChange={e => setPrompt(e.target.value)}>
+      </Input>
+
+      <DragDropForm></DragDropForm>
+
       <Row>
         <ImgCol ref={imgCol1}></ImgCol>
         <ImgCol ref={imgCol2}></ImgCol>
