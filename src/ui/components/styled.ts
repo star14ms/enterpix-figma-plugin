@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 
 export const Container = styled.div`
@@ -33,6 +33,14 @@ export const Text = styled.p`
 export const Input = styled.input`
   font-size: 24px;
   margin-top: 16px;
+`;
+
+export const RowCSS = css`
+  display: flex;
+  justify-content: space-evenly;
+  flex-basis: auto;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const Row = styled.div`

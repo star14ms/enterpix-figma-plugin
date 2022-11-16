@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Container, Text, Input, Row, ImgCol } from './styled'
+import { Row } from './styled'
 
 
 export const Button = styled.button`

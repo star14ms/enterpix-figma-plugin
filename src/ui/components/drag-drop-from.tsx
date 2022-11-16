@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 // import { Container, Button, Text, Input, Row, ImgCol } from './styled'
-import useImg2Img from '../hooks/useImg2Img';
+
   
 
 const Container = styled.div`
@@ -12,9 +12,9 @@ align-items: center;
 
 border: 2px dashed #ccc;
 border-radius: 20px;
-width: calc(100vw - 80px);
-height: calc((100vw - 80px) / 1.618);
-margin: 16px auto;
+width: 400px;
+height: calc(400px / 1.618);
+margin: 16px auto 0;
 padding: 20px;
 
 &.highlight, &:hover {
@@ -64,14 +64,12 @@ p {
 `
 
 
-function DragDropForm() {
+function DragDropForm({ generateImg2Img }) {
   const dropArea = useRef(null);
   const inputArea = useRef(null);
   const labelArea = useRef(null);
 
   const [fileUploaded, setFileUploaded] = useState(false)
-  const getImg2Img = useImg2Img();
-
 
   function preventDefaults (e) {
     e.preventDefault()
@@ -93,16 +91,9 @@ function DragDropForm() {
     var dt = e.dataTransfer
     var files = dt.files
   
-    generateImg2Img(files)
+    handleGenerateImg2Img(files)
   }
-  
-  const generateImg2Img = async (files: FileList) => {
-    setFileUploaded(true)
-    previewFile(files[0])
-    console.log(files[0])
-    // const images = await getImg2Img(files[0]);
-  }
-  
+
   function previewFile(file) {
     let reader = new FileReader()
     reader.readAsDataURL(file)
@@ -111,6 +102,12 @@ function DragDropForm() {
       img.src = String(reader.result)
       document.getElementById('gallery').replaceChildren(img)
     }
+  }
+
+  function handleGenerateImg2Img(files: FileList) {
+    setFileUploaded(true)
+    previewFile(files[0])
+    generateImg2Img(files)
   }
 
   return (
@@ -125,13 +122,8 @@ function DragDropForm() {
       <form className="my-form">
         {!fileUploaded && <>
           <p>Upload an image</p>
-          <br/>
-          <br/>
-          <p>Click and Select</p>
-          <p>or</p>
-          <p>Drag and Drop</p>
         </>}
-        <input ref={inputArea} type="file" id="fileElem" accept="image/*" onChange={(e) => generateImg2Img(e.target.files)} />
+        <input ref={inputArea} type="file" id="fileElem" accept="image/*" onChange={(e) => handleGenerateImg2Img(e.target.files)} />
         <label ref={labelArea} className="button" htmlFor="fileElem"></label>
       </form>
       <div id="gallery"></div>

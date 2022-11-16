@@ -1,4 +1,5 @@
 import { Quote } from '../../shared';
+import { Text2ImgParams, Img2ImgParams } from '../../shared/api'
 
 
 const apiUrl = 'https://type.fit/api/quotes';
@@ -25,7 +26,7 @@ export async function requestImg(url: RequestInfo) {
 }
 
 
-export async function requestText2Img(prompt: string) {
+export async function requestText2Img({ prompt, start, length, platform }: Text2ImgParams ) {
   const options = {
     method: 'POST',
     mode: 'cors' as RequestMode,
@@ -34,30 +35,43 @@ export async function requestText2Img(prompt: string) {
     },
     body: JSON.stringify({
       prompt: prompt,
-      // start: 0,
-      length: 10,
-      // platform: 'stable-diffusion',
+      start: start,
+      length: length,
+      platform: platform,
     })
   }
-
+  console.log(options.body)
   const response = await fetch(apiUrlText2Img, options)
   const json = await response.json()
+  console.log(json)
   return json.images
 }
 
 
-export async function requestImg2Img(image: null) {
+export async function requestImg2Img({ image, start, length, platform }: Img2ImgParams ) {
+  const body = {
+    image: image,
+    start: String(start),
+    length: String(length),
+    platform: platform,
+  }
+  
+  const formData = new FormData();
+  for (const key in body) {
+    formData.append(key, body[key]);
+  }
+
   const options = {
     method: 'POST',
     mode: 'cors' as RequestMode,
     headers: new Headers({
       'Content-Type': 'multipart/form-data',
     }),
-    body: JSON.stringify({
-      image: image,
-    })
+    body: formData,
   }
+  console.log(body)
   const response = await fetch(apiUrlImg2Img, options);
-  console.log(response)
-  return null
+  const json = await response.json()
+  console.log(json)
+  return json.images
 }

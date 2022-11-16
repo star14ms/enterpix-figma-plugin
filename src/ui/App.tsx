@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageData } from '../shared'
-import { Container, Button, Text, Input, Row, ImgCol } from './components/styled'
+import { Container, Input, Row, ImgCol } from './components/styled'
+import CheckboxPlatform from './components/checkbox-platform'
 import DragDropForm from './components/drag-drop-from'
 import Header from './components/header'
 import useText2Img from './hooks/useText2Img';
@@ -14,14 +15,21 @@ import {
 
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
   const getImg = useGetImg();
   const getText2Img = useText2Img();
+  const getImg2Img = useImg2Img();
   const { isScrollBottom } = useScroll();
-  const [prompt, setPrompt] = useState("");
-
+  
+  const InputRef = useRef(null);
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
+
+  const [prompt, setPrompt] = useState("");
+  const [platform, setPlatform] = useState({  
+    midjourney: true,
+    stableDiffusion: true,
+  })
+  const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
 
@@ -65,24 +73,34 @@ function App() {
     setCol2Height(col2H)
   }
 
-  const generateText2Img = async () => {
+  const generateText2Img = async (prompt: string) => {
+    if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
-    const images = await getText2Img(prompt);
+    const images = await getText2Img(prompt, platform);
     showImages(images, false);
     setIsLoading(false)
   };
 
   const generateText2ImgAdd = async () => {
+    if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
-    const images = await getText2Img(prompt);
+    const images = await getText2Img(prompt, platform);
     showImages(images, true);
     setIsLoading(false)
   };
 
+  const generateImg2Img = async (files: FileList) => {
+    if (isLoading) return
+    setIsLoading(true)
+    const images = await getImg2Img(files[0], platform);
+    showImages(images, false);
+    setIsLoading(false)
+  }
 
   const handleOnKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      await generateText2Img(); // Enter 입력이 되면 클릭 이벤트 실행
+      setPrompt(InputRef.current!.value)
+      await generateText2Img(InputRef.current!.value); // Enter 입력이 되면 클릭 이벤트 실행
     }
   }
 
@@ -97,12 +115,13 @@ function App() {
       <Header></Header>
 
       <Input 
-        value={prompt} type='text' placeholder='What do you want?'
-        onKeyPress={e => handleOnKeyPress(e)} 
-        onChange={e => setPrompt(e.target.value)}>
+        ref={InputRef} type='text' placeholder='What do you want?'
+        onKeyPress={e => handleOnKeyPress(e)}
+      >
       </Input>
+      <CheckboxPlatform state={platform} setState={setPlatform}></CheckboxPlatform>
 
-      <DragDropForm></DragDropForm>
+      <DragDropForm generateImg2Img={generateImg2Img}></DragDropForm>
 
       <Row>
         <ImgCol ref={imgCol1}></ImgCol>

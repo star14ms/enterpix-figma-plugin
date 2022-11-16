@@ -1,25 +1,23 @@
 import { useState } from 'react';
-import { Quote } from '../../shared';
+import { ImageData } from '../../shared';
+import { PlatformParams } from '../../shared/api';
 import { requestImg2Img } from '../api';
+import { makePlatformAPIArg } from '../lib/utils';
+
 
 function useImg2Img() {
-  const [quotesData, setQuotesData] = useState<Quote[] | null>(null);
+  const startInit = Math.floor(Math.random() * 1000)
+  const [start, setStart] = useState(startInit);
+  const length = 20
 
-  const getImg2Img = async (img: null) => {
-    if (quotesData) {
-      return quotesData;
-    }
-    const apiQuotes = await requestImg2Img(img);
-    setQuotesData(apiQuotes);
-    return apiQuotes;
+  const getImg2Img = async (image: File, platformParmas: PlatformParams) => {
+    const platform = makePlatformAPIArg(platformParmas)
+    const json = await requestImg2Img({ image, start, length, platform }) as ImageData[] | null;
+    setStart(start => (start + length) % 1000)
+    return json;
   };
 
-  const getRandomQuote = async (img: null) => {
-    const response = await getImg2Img(img);
-    return response;
-  };
-
-  return getRandomQuote;
+  return getImg2Img;
 }
 
 export default useImg2Img;
