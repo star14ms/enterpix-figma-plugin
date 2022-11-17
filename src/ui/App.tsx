@@ -23,11 +23,13 @@ function App() {
   const imgCol2 = useRef(null);
 
   const [prompt, setPrompt] = useState("");
+  const [file, setFile] = useState<File>(null);
   const [platform, setPlatform] = useState({  
     midjourney: true,
     stableDiffusion: true,
   })
   const [isLoading, setIsLoading] = useState(false);
+  const [isText2Img, SetIsText2Img] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
 
@@ -73,6 +75,7 @@ function App() {
   const generateText2Img = async (prompt: string) => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
+    SetIsText2Img(true)
     const json = await getText2Img(prompt, platform);
     if (json.images) {
       showImages(json.images, false);
@@ -93,9 +96,21 @@ function App() {
   const generateImg2Img = async (file: File) => {
     if (isLoading) return
     setIsLoading(true)
+    SetIsText2Img(false)
+    setFile(file)
     const json = await getImg2Img(file, platform);
     if (json.images) {
       showImages(json.images, false);
+    }
+    setIsLoading(false)
+  }
+
+  const generateImg2ImgAdd = async () => {
+    if (isLoading) return
+    setIsLoading(true)
+    const json = await getImg2Img(file, platform);
+    if (json.images) {
+      showImages(json.images, true);
     }
     setIsLoading(false)
   }
@@ -109,7 +124,11 @@ function App() {
 
   useEffect(() => {
     if (isScrollBottom) {
-      generateText2ImgAdd()
+      if (isText2Img) {
+        generateText2ImgAdd()
+      } else {
+        generateImg2ImgAdd()
+      }
     }
   }, [isScrollBottom])
 

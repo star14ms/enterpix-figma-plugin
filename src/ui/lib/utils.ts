@@ -12,3 +12,8 @@ export function makePlatformAPIArg(platformParmas: PlatformParams) {
   }
   return platform
 }
+
+
+export function isFileImage(file: File) {
+  return file && file['type'].split('/')[0] === 'image';
+}

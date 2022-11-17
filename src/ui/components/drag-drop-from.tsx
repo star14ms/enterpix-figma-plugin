@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { isFileImage } from '../lib/utils'
   
 
 const Container = styled.div`
@@ -94,21 +95,23 @@ function DragDropForm({ generateImg2Img }) {
     handleGenerateImg2Img(files)
   }
 
-  function previewFile(file) {
+  function previewFile(file: File) {
     let reader = new FileReader()
     reader.readAsDataURL(file)
-    reader.onloadend = function() {
+    reader.onloadend = () => {
       let img = document.createElement('img')
       img.src = String(reader.result)
       document.getElementById('gallery').replaceChildren(img)
     }
   }
 
-  function handleGenerateImg2Img(files: FileList) {
+  async function handleGenerateImg2Img(files: FileList) {
+    let file = files[0]
+    if (!isFileImage(file)) return
     setFileUploaded(true)
-    previewFile(files[0])
-    generateImg2Img(files)
     dropArea.current!.classList.add('uploaded')
+    previewFile(file)
+    await generateImg2Img(file)
   }
 
   return (
