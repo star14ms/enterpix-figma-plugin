@@ -3,6 +3,7 @@ import {
   PluginCallbackFunction,
   PluginMessagePayload,
   generateImagePayload,
+  ErrorPayload
 } from '../shared';
 
 
@@ -22,8 +23,7 @@ function isPayload(payload: unknown): payload is PluginMessagePayload {
     typeof payload === 'object' &&
     Object.prototype.hasOwnProperty.call(payload, 'type') &&
     (
-      Object.prototype.hasOwnProperty.call(payload, 'randomQuote') ||
-      Object.prototype.hasOwnProperty.call(payload, 'text') ||
+      Object.prototype.hasOwnProperty.call(payload, 'json') ||
       Object.prototype.hasOwnProperty.call(payload, 'array')
     )
   );
@@ -45,10 +45,16 @@ async function generateImage({ array, width, height }: generateImagePayload) {
 }
 
 
+function error({ json }: ErrorPayload) {
+  throw `${json.message} (${json.statusCode})`
+}
+
+
 loadFonts().then(() => {
   figma.ui.onmessage = (payload: unknown) => {
     const callbackMap: Record<PluginAction, PluginCallbackFunction> = {
       generateImage,
+      error,
     };
 
     if (isPayload(payload) && callbackMap[payload.type]) {

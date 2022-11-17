@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ImageData } from '../shared'
+import { ImageData } from '../shared/api'
 import { Container, Input, Row, ImgCol } from './components/styled'
 import CheckboxPlatform from './components/checkbox-platform'
 import DragDropForm from './components/drag-drop-from'
@@ -9,9 +9,7 @@ import useImg2Img from './hooks/useImg2Img';
 import useGetImg from './hooks/useGetImg';
 import useScroll from './hooks/useScroll';
 
-import { 
-  requestgenerateImageToPlugin
-} from './lib/figma';
+import { requestgenerateImageToPlugin } from './lib/figma';
 
 
 function App() {
@@ -75,24 +73,30 @@ function App() {
   const generateText2Img = async (prompt: string) => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
-    const images = await getText2Img(prompt, platform);
-    showImages(images, false);
+    const json = await getText2Img(prompt, platform);
+    if (json.images) {
+      showImages(json.images, false);
+    }
     setIsLoading(false)
   };
 
   const generateText2ImgAdd = async () => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
-    const images = await getText2Img(prompt, platform);
-    showImages(images, true);
+    const json = await getText2Img(prompt, platform);
+    if (json.images) {
+      showImages(json.images, true);
+    }
     setIsLoading(false)
   };
 
-  const generateImg2Img = async (files: FileList) => {
+  const generateImg2Img = async (file: File) => {
     if (isLoading) return
     setIsLoading(true)
-    const images = await getImg2Img(files[0], platform);
-    showImages(images, false);
+    const json = await getImg2Img(file, platform);
+    if (json.images) {
+      showImages(json.images, false);
+    }
     setIsLoading(false)
   }
 

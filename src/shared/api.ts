@@ -17,3 +17,20 @@ export type PlatformParams = {
     midjourney: boolean,
     stableDiffusion: boolean,
 }
+
+export type ImageData = {
+    id: string,
+    compressedUrl: string,
+    bigThumbnailUrl: string,
+    thumbnailUrl: string,
+    width: number,
+    height: number,
+};
+
+export type ResponseJson = {
+    images?: ImageData[],
+    name?: string,
+    statusCode?: number,
+    code?: string,
+    message?: string,
+}

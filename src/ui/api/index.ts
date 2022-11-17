@@ -1,17 +1,9 @@
-import { Quote } from '../../shared';
 import { Text2ImgParams, Img2ImgParams } from '../../shared/api'
+import { requestErrorToPlugin } from '../lib/figma';
 
 
-const apiUrl = 'https://type.fit/api/quotes';
-const apiUrlText2Img = '...';
-const apiUrlImg2Img = '...';
-
-
-export async function requestQuotes() {
-  const response = await fetch(apiUrl);
-  const data = await response.json();
-  return data as Quote[];
-}
+const apiUrlText2Img = 'https://api.enterpix.app/v1/image/prompt-search';
+const apiUrlImg2Img = 'https://api.enterpix.app/v1/image/image-search';
 
 
 export async function requestImg(url: RequestInfo) {
@@ -44,13 +36,15 @@ export async function requestText2Img({ prompt, start, length, platform }: Text2
   const response = await fetch(apiUrlText2Img, options)
   const json = await response.json()
   console.log(json)
-  return json.images
+
+  if (response.status !== 200) requestErrorToPlugin(json)
+  return json
 }
 
 
 export async function requestImg2Img({ image, start, length, platform }: Img2ImgParams ) {
   const body = {
-    image: image,
+    image: image instanceof Blob,
     start: String(start),
     length: String(length),
     platform: platform,
@@ -73,5 +67,7 @@ export async function requestImg2Img({ image, start, length, platform }: Img2Img
   const response = await fetch(apiUrlImg2Img, options);
   const json = await response.json()
   console.log(json)
-  return json.images
+
+  if (response.status !== 200) requestErrorToPlugin(json)
+  return json
 }
