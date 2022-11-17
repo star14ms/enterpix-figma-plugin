@@ -67,7 +67,6 @@ p {
 
 function DragDropForm({ generateImg2Img }) {
   const dropArea = useRef(null);
-  const inputArea = useRef(null);
   const labelArea = useRef(null);
 
   const [fileUploaded, setFileUploaded] = useState(false)
@@ -127,7 +126,7 @@ function DragDropForm({ generateImg2Img }) {
         {!fileUploaded && <>
           <p>Upload an image</p>
         </>}
-        <input ref={inputArea} type="file" id="fileElem" accept="image/*" onChange={(e) => handleGenerateImg2Img(e.target.files)} />
+        <input type="file" id="fileElem" accept="image/*" onChange={(e) => handleGenerateImg2Img(e.target.files)} />
         <label ref={labelArea} className="button" htmlFor="fileElem"></label>
       </form>
       <div id="gallery"></div>

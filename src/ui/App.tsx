@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ImageData } from '../shared/api'
+import { ImageData, ResponseJson } from '../shared/api'
 import { Container, Input, Row, ImgCol } from './components/styled'
 import CheckboxPlatform from './components/checkbox-platform'
 import DragDropForm from './components/drag-drop-from'
@@ -18,7 +18,7 @@ function App() {
   const getImg2Img = useImg2Img();
   const { isScrollBottom } = useScroll();
   
-  const InputRef = useRef(null);
+  const inputTextRef = useRef(null);
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
@@ -76,50 +76,47 @@ function App() {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
     SetIsText2Img(true)
+    document.getElementById('gallery').replaceChildren()
+    setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, platform);
-    if (json.images) {
-      showImages(json.images, false);
-    }
-    setIsLoading(false)
+    postRequest(json, false)
   };
 
   const generateText2ImgAdd = async () => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
     const json = await getText2Img(prompt, platform);
-    if (json.images) {
-      showImages(json.images, true);
-    }
-    setIsLoading(false)
+    postRequest(json, true)
   };
 
   const generateImg2Img = async (file: File) => {
     if (isLoading) return
     setIsLoading(true)
     SetIsText2Img(false)
+    inputTextRef.current!.value = ''
     setFile(file)
     const json = await getImg2Img(file, platform);
-    if (json.images) {
-      showImages(json.images, false);
-    }
-    setIsLoading(false)
+    postRequest(json, false)
   }
 
   const generateImg2ImgAdd = async () => {
     if (isLoading) return
     setIsLoading(true)
     const json = await getImg2Img(file, platform);
-    if (json.images) {
-      showImages(json.images, true);
-    }
-    setIsLoading(false)
+    postRequest(json, true)
   }
 
   const handleOnKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      setPrompt(InputRef.current!.value)
-      await generateText2Img(InputRef.current!.value); // Enter 입력이 되면 클릭 이벤트 실행
+      await generateText2Img(inputTextRef.current!.value); // Enter 입력이 되면 클릭 이벤트 실행
     }
+  }
+
+  const postRequest = (json: ResponseJson, add: boolean) => {
+    if (json.images) {
+      showImages(json.images, add);
+    }
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -137,7 +134,7 @@ function App() {
       <Header></Header>
 
       <Input 
-        ref={InputRef} type='text' placeholder='What do you want?'
+        ref={inputTextRef} type='text' placeholder='What do you want?'
         onKeyPress={e => handleOnKeyPress(e)}
       >
       </Input>
