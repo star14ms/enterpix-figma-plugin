@@ -1,7 +1,5 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-// import { Container, Button, Text, Input, Row, ImgCol } from './styled'
-
   
 
 const Container = styled.div`
@@ -20,6 +18,10 @@ padding: 20px;
 &.highlight, &:hover {
   border-color: purple;
   cursor: pointer;
+}
+
+&.uploaded {
+  height: calc(200px / 1.618);
 }
 
 a {
@@ -43,9 +45,7 @@ p {
 }
 
 #gallery img {
-  width: 150px;
-  margin-bottom: 10px;
-  margin-right: 10px;
+  width: 100px;
   vertical-align: middle;
 }
 
@@ -108,6 +108,7 @@ function DragDropForm({ generateImg2Img }) {
     setFileUploaded(true)
     previewFile(files[0])
     generateImg2Img(files)
+    dropArea.current!.classList.add('uploaded')
   }
 
   return (
