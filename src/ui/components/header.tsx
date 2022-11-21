@@ -1,73 +1,152 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row } from './styled'
 
 
-export const Button = styled.button`
-  background-color: #FFFFFF;
-  
-  &:hover {
-    background-color: #AAAAAA;
-  }
-`;
+function Header({ headerMenu, setHeaderMenu }) {
 
-const A = styled.a`
-  margin-top: 8px;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-
-export const BookIcon = () => {
-  return (
-      <Button className="">
-      <svg className="h-8 w-8 sm:hidden" width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="4" width="5" height="8" fill="#0104FF"></rect>
-        <rect x="8" y="12" width="5" height="12" fill="#FFFF01"></rect>
-        <rect x="8" y="24" width="5" height="8" fill="#FF00FF"></rect>
-        <rect x="13" y="4" width="9" height="28" fill="#00FE02"></rect>
-        <rect x="22" y="4" width="9" height="28" fill="#FD0100"></rect>
-        <path d="M31 4L10 7V35L31 32V4Z" fill="black"></path>
-        <g clip-path="url(#clip0_1415_5589)">
-          <path d="M12.5 16.0323L19.5968 14.8868L19.6137 16.8376L14.6881 17.6327L14.709 20.029L19.3427 19.2811L19.3598 21.2468L14.726 21.9948L14.7495 24.6986L19.9809 23.8542L19.7791 25.8403L12.595 27L12.5 16.0323Z" fill="white"></path><path d="M20.718 14.7058L24.4339 14.1061C25.2303 13.9775 25.8891 13.9657 26.4109 14.0712C26.932 14.1773 27.3474 14.3613 27.6561 14.6245C27.9648 14.8877 28.1813 15.2163 28.3065 15.6118C28.4316 16.0066 28.4958 16.4293 28.4997 16.88C28.5039 17.3612 28.4474 17.8323 28.3297 18.292C28.212 18.7523 28.0018 19.173 27.6988 19.5556C27.3957 19.9375 26.9901 20.2671 26.4819 20.5437C25.973 20.8211 25.3306 21.0219 24.5532 21.1474L22.9215 21.4107L22.9555 25.3278L20.8132 25.6736L20.7182 14.706L20.718 14.7058ZM24.4637 19.2544C24.8426 19.1932 25.1558 19.1014 25.403 18.9794C25.6495 18.8576 25.8454 18.7134 25.99 18.5461C26.1346 18.3794 26.2321 18.1871 26.2843 17.9684C26.3353 17.7499 26.3605 17.5174 26.3585 17.2717C26.3563 17.0161 26.3253 16.7952 26.2649 16.6102C26.2051 16.4252 26.1017 16.2773 25.9547 16.1677C25.8078 16.0581 25.6106 15.9873 25.3621 15.9561C25.1136 15.9242 24.8002 15.9391 24.4214 16.0003L22.8769 16.2495L22.9051 19.506L24.4639 19.2544H24.4637Z" fill="white"></path>
-        </g>
-          <defs>
-            <clipPath id="clip0_1415_5589">
-            <rect width="16" height="13" fill="white" transform="translate(13 14)">
-            </rect>
-          </clipPath>
-          </defs>
-      </svg>
-    </Button>
-  )
-}
-
-function Header() {
-
-  const Logo = () => {
+  const SvgSearch = () => {
     return (
-      <A href="https://enterpix.app/" target="_blank">
-      <svg className="w-[192px] lg:w-[289px]" width="290" height="48" viewBox="0 0 290 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_857_71139)">
-          <path d="M1.14438 0.500214H33.4662V8.94906H11.0334V19.3272H32.1388V27.8425H11.0334V39.5512H34.8599L33.8644 48H1.14438V0.500214ZM37.8652 0.500214H46.7587L66.2712 31.6345V0.500214H75.8947V48H67.0676L47.4887 17.1318V48H37.8652V0.500214ZM92.3373 9.08211H78.0684V0.500214H116.562V9.08211H102.293V48H92.3373V9.08211ZM118.761 0.500214H151.082V8.94906H128.65V19.3272H149.755V27.8425H128.65V39.5512H152.476L151.481 48H118.761V0.500214ZM155.481 0.500214H172.273C175.989 0.500214 179.042 0.94372 181.432 1.83074C183.865 2.67341 185.768 3.80436 187.139 5.22359C188.511 6.59846 189.462 8.15074 189.993 9.88043C190.524 11.5657 190.79 13.2289 190.79 14.8699C190.79 17.9301 190.237 20.5025 189.13 22.587C188.024 24.6714 186.166 26.4233 183.555 27.8425L193.179 48H182.494L174.529 30.171H165.238V48H155.481V0.500214ZM172.936 21.9217C174.485 21.9217 175.768 21.7665 176.786 21.456C177.803 21.1012 178.6 20.6355 179.175 20.059C179.794 19.4381 180.215 18.7063 180.436 17.8636C180.657 17.0209 180.768 16.0895 180.768 15.0695C180.768 14.2268 180.635 13.4285 180.37 12.6745C180.104 11.8762 179.64 11.1888 178.976 10.6122C178.357 9.99133 177.471 9.52565 176.321 9.21516C175.215 8.86038 173.799 8.68295 172.074 8.68295H165.238V21.9217H172.936Z" fill="black"></path><path d="M194.859 0.500214H211.783C215.412 0.500214 218.398 0.921548 220.743 1.76422C223.132 2.56253 225.014 3.64913 226.385 5.02401C227.801 6.35453 228.774 7.92898 229.305 9.74737C229.88 11.5214 230.168 13.3842 230.168 15.3356C230.168 17.42 229.88 19.4158 229.305 21.323C228.774 23.2301 227.801 24.9154 226.385 26.379C225.014 27.7982 223.155 28.9291 220.81 29.7718C218.509 30.6145 215.589 31.0358 212.049 31.0358H204.615V48H194.859V0.500214ZM211.717 22.7865C213.443 22.7865 214.859 22.6091 215.965 22.2543C217.116 21.8995 218.022 21.4116 218.686 20.7907C219.349 20.1699 219.792 19.4158 220.013 18.5288C220.279 17.5975 220.411 16.5996 220.411 15.5352C220.411 14.4264 220.279 13.4507 220.013 12.608C219.748 11.7653 219.283 11.0558 218.619 10.4792C217.956 9.90258 217.049 9.45912 215.898 9.14864C214.793 8.83815 213.376 8.68295 211.651 8.68295H204.615V22.7865H211.717ZM233.33 0.500214H243.219V48H233.33V0.500214ZM261.001 22.9861L245.603 0.500214H256.886L266.642 15.6682L276.597 0.500214H287.217L272.084 23.2522L289.075 48H277.792L266.31 30.7032L255.293 48H244.475L261.001 22.9861Z" fill="#5969E9"></path>
-        </g>
-        <defs>
-          <clipPath id="clip0_857_71139">
-          <rect width="289" height="48" fill="white" transform="translate(0.5)"></rect>
-          </clipPath>
-        </defs>
-      </svg>
-    </A>
+      <Svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 13L9 9M10.3333 5.66667C10.3333 8.244 8.244 10.3333 5.66667 10.3333C3.08934 10.3333 1 8.244 1 5.66667C1 3.08934 3.08934 1 5.66667 1C8.244 1 10.3333 3.08934 10.3333 5.66667Z" 
+          stroke={strokeColor(0)} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        />
+      </Svg>
     )
   }
 
+  const SvgImageSearch = () => {
+    return (
+      <Svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.66669 9.66669L4.72388 6.6095C5.24458 6.0888 6.0888 6.0888 6.6095 6.6095L9.66669 9.66669M8.33335 8.33335L9.39054 7.27616C9.91124 6.75546 10.7555 6.75546 11.2762 7.27616L12.3334 8.33335M8.33335 4.33335H8.34002M3.00002 12.3334H11C11.7364 12.3334 12.3334 11.7364 12.3334 11V3.00002C12.3334 2.26364 11.7364 1.66669 11 1.66669H3.00002C2.26364 1.66669 1.66669 2.26364 1.66669 3.00002V11C1.66669 11.7364 2.26364 12.3334 3.00002 12.3334Z" 
+          stroke={strokeColor(1)} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        />
+      </Svg>
+    )
+  }
+
+  const SvgKeywords = () => {
+    return (
+      <Svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.66667 3.66667H3.67333M3.66667 1H7C7.34124 0.99999 7.68245 1.13016 7.94281 1.39052L12.6095 6.05719C13.1302 6.57789 13.1302 7.42211 12.6095 7.94281L7.94281 12.6095C7.42211 13.1302 6.57789 13.1302 6.05719 12.6095L1.39052 7.94281C1.13018 7.68246 1 7.34123 1 7V3.66667C1 2.19391 2.19391 1 3.66667 1Z" 
+          stroke={strokeColor(2)} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+        />
+      </Svg>
+    )
+  }
+
+  const strokeColor = (menuNum: Number) => {
+    return menuNum === headerMenu ? '#6D7DFD' : '#9CA3AF'
+  }
+
   return (
-    <Row>
-      <Logo></Logo>
-    </Row>
+    <Container>
+      <Div onClick={e => setHeaderMenu(0)} className={headerMenu === 0 ? 'is-active' : ''}>
+        <SvgSearch></SvgSearch>
+        <Span>Search</Span>
+      </Div>
+
+      <Div onClick={e => setHeaderMenu(1)} className={headerMenu === 1 ? 'is-active' : ''}>
+        <SvgImageSearch></SvgImageSearch>
+        <Span>Image Search</Span>
+      </Div>
+
+      <Div onClick={e => setHeaderMenu(2)} className={headerMenu === 2 ? 'is-active' : ''}>
+        <SvgKeywords></SvgKeywords>
+        <Span>KeyWords</Span>
+      </Div>
+    </Container>
   )
 }
+
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 10px;
+  gap: 4px;
+  border-bottom: 2px solid #F3F4F6;
+  
+  height: 28px;
+  
+  /* Enterpix/white */
+  
+  background: #FFFFFF;
+  
+  /* Inside auto layout */
+  
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+`
+
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px;
+  gap: 4px;
+  
+  
+  /* Inside auto layout */
+  
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  
+  
+  /* Custom */
+  border-radius: 1rem;
+  color: #9CA3AF;
+  transition: 0.15s;
+  
+  &.is-active {
+    transition: 0.15s;
+    color: #6D7DFD;
+  }
+  
+  &:hover {
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
+  }
+  
+  &:active {
+    background-color: rgb(220, 220, 220);
+  }
+`
+
+
+const Span = styled.span`
+  height: 11px;
+  
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 11px;
+  /* identical to box height, or 100% */
+  
+  
+  /* Inside auto layout */
+  
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+`
+
+
+const Svg = styled.svg`
+  width: 16px;
+  height: 16px;
+  
+  
+  /* Inside auto layout */
+  
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`
+
 
 export default Header

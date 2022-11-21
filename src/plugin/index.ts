@@ -7,7 +7,7 @@ import {
 } from '../shared';
 
 
-figma.showUI(__html__, { title: 'Enterpix', width: 484, height: 664 });
+figma.showUI(__html__, { title: 'Enterpix', width: 400, height: 600 });
 
 
 async function loadFonts() {

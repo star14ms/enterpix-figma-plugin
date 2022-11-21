@@ -3,68 +3,6 @@ import styled from 'styled-components';
 import { isFileImage } from '../lib/utils'
   
 
-const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-
-border: 2px dashed #ccc;
-border-radius: 20px;
-width: 400px;
-height: calc(400px / 1.618);
-margin: 16px auto 0;
-padding: 20px;
-
-&.highlight, &:hover {
-  border-color: purple;
-  cursor: pointer;
-}
-
-&.uploaded {
-  height: calc(200px / 1.618);
-}
-
-a {
-  color: #369;
-}
-
-p {
-  font-size: 24px;
-  margin: 0;
-}
-
-.my-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 0;
-}
-
-#gallery {
-  margin-top: 10px;
-}
-
-#gallery img {
-  width: 100px;
-  vertical-align: middle;
-}
-
-.button {
-  width: 0;
-  height: 0;
-}
-
-.button:hover {
-  background: #5969E9;
-}
-
-#fileElem {
-  display: none;
-}
-`
-
-
 function DragDropForm({ generateImg2Img }) {
   const dropArea = useRef(null);
   const labelArea = useRef(null);
@@ -133,6 +71,68 @@ function DragDropForm({ generateImg2Img }) {
     </Container>
   );
 }
+
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  border: 2px dashed #ccc;
+  border-radius: 20px;
+  width: 340px;
+  height: 100%;
+  margin: 16px auto 0;
+  padding: 20px;
+  
+  &.highlight, &:hover {
+    border-color: purple;
+    cursor: pointer;
+  }
+  
+  &.uploaded {
+    height: calc(200px / 1.618);
+  }
+  
+  a {
+    color: #369;
+  }
+  
+  p {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .my-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+  }
+  
+  #gallery {
+    margin-top: 10px;
+  }
+  
+  #gallery img {
+    width: 100px;
+    vertical-align: middle;
+  }
+  
+  .button {
+    width: 0;
+    height: 0;
+  }
+  
+  .button:hover {
+    background: #5969E9;
+  }
+  
+  #fileElem {
+    display: none;
+  }
+`
 
 
 export default DragDropForm

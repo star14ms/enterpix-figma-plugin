@@ -3,6 +3,45 @@ import { RowCSS } from './styled'
 import styled from 'styled-components';
 
 
+function CheckboxPlatform({ state, setState }) {
+
+  //값을 가져오기 위해 inputs에 name으로 가져왔다
+  const { midjourney, stableDiffusion } = state   
+  
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target   
+  
+    const nextInputs = {            
+      ...state,  
+      [name]: checked,
+    }
+
+    setState(nextInputs)
+  }
+
+  return (
+    <RowMarginTop>
+      <Label htmlFor='midjourney' className='container'>
+        Midjourney
+        <input 
+          type='checkbox' checked={midjourney} onChange={e => onChange(e)} 
+          id='midjourney' name='midjourney' 
+        />
+        <span className='checkmark'></span>
+      </Label>
+
+      <Label htmlFor='stable-diffusion'>
+        Stable-Diffusion
+        <input 
+          type='checkbox' checked={stableDiffusion} onChange={e => onChange(e)} 
+          id='stable-diffusion' name='stableDiffusion'
+        />
+        <span className='checkmark'></span>
+      </Label>
+    </RowMarginTop>
+  );
+}
+
 
 export const RowMarginTop = styled.div`
   ${RowCSS}
@@ -79,44 +118,5 @@ const Label = styled.label`
   }
 `
 
-
-function CheckboxPlatform({ state, setState }) {
-
-  //값을 가져오기 위해 inputs에 name으로 가져왔다
-  const { midjourney, stableDiffusion } = state   
-  
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target   
-  
-    const nextInputs = {            
-      ...state,  
-      [name]: checked,
-    }
-
-    setState(nextInputs)
-  }
-
-  return (
-    <RowMarginTop>
-      <Label htmlFor='midjourney' className='container'>
-        Midjourney
-        <input 
-          type='checkbox' checked={midjourney} onChange={e => onChange(e)} 
-          id='midjourney' name='midjourney' 
-        />
-        <span className='checkmark'></span>
-      </Label>
-
-      <Label htmlFor='stable-diffusion'>
-        Stable-Diffusion
-        <input 
-          type='checkbox' checked={stableDiffusion} onChange={e => onChange(e)} 
-          id='stable-diffusion' name='stableDiffusion'
-        />
-        <span className='checkmark'></span>
-      </Label>
-    </RowMarginTop>
-  );
-}
 
 export default CheckboxPlatform;
