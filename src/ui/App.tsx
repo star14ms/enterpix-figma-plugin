@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Header from './components/header'
-import Search from './components/search';
-import ImageSearch from './components/image-search';
-import Info from './components/info';
+import MenuSearch from './components/menu-search';
+import MenuImageSearch from './components/menu-image-search';
+import MenuKeywords from './components/menu-keywords';
+import MenuInfo from './components/menu-info';
 
 
 function App() {
@@ -14,14 +15,17 @@ function App() {
       <Header menu={menu} setMenu={setMenu}></Header>
       
       <Main>
-        {menu === 0 &&
-          <Search setMenu={setMenu}></Search>
+        {menu === 0 && 
+          <MenuSearch setMenu={setMenu}></MenuSearch>
         }
         {menu === 1 && 
-          <ImageSearch></ImageSearch>
+          <MenuImageSearch></MenuImageSearch>
         }
-        {menu === 3 &&
-          <Info></Info>
+        {menu === 2 && 
+          <MenuKeywords></MenuKeywords>
+        }
+        {menu === 3 && 
+          <MenuInfo></MenuInfo>
         }
       </Main>
     </Container>

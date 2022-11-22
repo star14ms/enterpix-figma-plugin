@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Container, Row, Row_Center, ImgCol, HoverCSS } from './styled'
-import { SvgInfo } from './icons'
+import { SvgInfo } from './svg'
 import CheckboxPlatform from './checkbox-platform'
 
 import { ImageData, ResponseJson } from '../../shared/api'
@@ -11,7 +11,7 @@ import useScroll from '../hooks/useScroll';
 import { requestgenerateImageToPlugin } from '../lib/figma';
 
 
-function Search({ setMenu }) {
+function MenuSearch({ setMenu }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
   const { isScrollBottom } = useScroll();
@@ -166,4 +166,4 @@ const Input = styled.input`
 `
 
 
-export default Search;
+export default MenuSearch;

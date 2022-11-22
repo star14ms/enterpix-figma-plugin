@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { SvgBook, SvgLogo, SvgHeart, SvgPhoto, SvgDiscord } from './icons'
-import { Container, Row_CenterCSS, Col_CenterCSS, HoverCSS } from '../components/styled'
+import { SvgBook, SvgLogo, SvgHeart, SvgPhoto, SvgDiscord } from './svg'
+import { Container, Row_CenterCSS, Col_CenterCSS, HoverCSS } from './styled'
 import styled, { css } from 'styled-components';
 
 
 const version = 'v.0.1'
 
 
-function Info() {
+function MenuInfo() {
     return (
       <Container>
         <Col_A_Center_Gap16>
@@ -184,4 +184,4 @@ const A = styled.a`
   text-decoration: none;
 `
 
-export default Info
+export default MenuInfo

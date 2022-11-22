@@ -9,7 +9,7 @@ import useScroll from '../hooks/useScroll';
 import { requestgenerateImageToPlugin } from '../lib/figma';
 
 
-function ImageSearch() {
+function MenuImageSearch() {
   const getImg = useGetImg();
   const getImg2Img = useImg2Img();
   const { isScrollBottom } = useScroll();
@@ -102,4 +102,4 @@ function ImageSearch() {
   );
 }
 
-export default ImageSearch;
+export default MenuImageSearch;
