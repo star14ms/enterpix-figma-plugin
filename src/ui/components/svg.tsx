@@ -89,6 +89,15 @@ export const SvgDiscord = () => {
 }
 
 
+export const SvgArrow = () => {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M4.37575 8.82426C4.14143 8.58995 4.14143 8.21005 4.37575 7.97574L6.35148 6L4.37575 4.02426C4.14143 3.78995 4.14143 3.41005 4.37575 3.17574C4.61006 2.94142 4.98996 2.94142 5.22428 3.17574L7.62428 5.57574C7.85859 5.81005 7.85859 6.18995 7.62428 6.42426L5.22428 8.82426C4.98996 9.05858 4.61006 9.05858 4.37575 8.82426Z" fill="#9CA3AF"/>
+    </svg>
+  )
+}
+
+
 const Button = styled.button`
   background-color: #FFFFFF;
   

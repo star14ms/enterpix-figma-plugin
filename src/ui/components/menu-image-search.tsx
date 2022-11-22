@@ -6,10 +6,10 @@ import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
 import useScroll from '../hooks/useScroll';
 
-import { requestgenerateImageToPlugin } from '../lib/figma';
+import { img2File, createImgItem } from '../lib/utils';
 
 
-function MenuImageSearch() {
+function MenuImageSearch({ file, setFile, setMenu }){
   const getImg = useGetImg();
   const getImg2Img = useImg2Img();
   const { isScrollBottom } = useScroll();
@@ -17,7 +17,6 @@ function MenuImageSearch() {
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [file, setFile] = useState<File>(null);
   const [platform, setPlatform] = useState({  
     midjourney: true,
     stableDiffusion: true,
@@ -39,21 +38,14 @@ function MenuImageSearch() {
     let col1H = col1Height, col2H = col2Height
 
     for (const image of images) {
-      const el = document.createElement('img');
-      el.id = image.id
-      el.src = image.compressedUrl
-
-      el.addEventListener('click', async () => {
-        const array = await getImg(image.compressedUrl);
-        requestgenerateImageToPlugin(array, image.width, image.height)
-      });
+      const imageItem = createImgItem(image, getImg, img2File, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
-        imgCol2.current!.appendChild(el);
+        imgCol2.current!.appendChild(imageItem);
       } else {
         col1H = col1H + image.height / image.width;
-        imgCol1.current!.appendChild(el);
+        imgCol1.current!.appendChild(imageItem);
       }
     }
     setCol1Height(col1H)
@@ -90,7 +82,7 @@ function MenuImageSearch() {
 
   return (
     <Container>
-      <DragDropForm generateImg2Img={generateImg2Img}></DragDropForm>
+      <DragDropForm generateImg2Img={generateImg2Img} file={file}></DragDropForm>
 
       <Row>
         <ImgCol ref={imgCol1}></ImgCol>

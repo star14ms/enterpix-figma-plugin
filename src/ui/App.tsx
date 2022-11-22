@@ -10,17 +10,18 @@ import MenuInfo from './components/menu-info';
 function App() {
   const [menu, setMenu] = useState(0);
   const [prompt, setPrompt] = useState("");
+  const [file, setFile] = useState<File>(null);
 
   return (
     <Container>
-      <Header menu={menu} setMenu={setMenu} setPrompt={setPrompt}></Header>
+      <Header menu={menu} setMenu={setMenu} setPrompt={setPrompt} setFile={setFile}></Header>
       
       <Main>
         {menu === 0 && 
-          <MenuSearch setMenu={setMenu} prompt={prompt} setPrompt={setPrompt}></MenuSearch>
+          <MenuSearch setMenu={setMenu} prompt={prompt} setPrompt={setPrompt} setFile={setFile}></MenuSearch>
         }
         {menu === 1 && 
-          <MenuImageSearch></MenuImageSearch>
+          <MenuImageSearch setMenu={setMenu} file={file} setFile={setFile}></MenuImageSearch>
         }
         {menu === 2 && 
           <MenuKeywords setMenu={setMenu} setPrompt={setPrompt}></MenuKeywords>

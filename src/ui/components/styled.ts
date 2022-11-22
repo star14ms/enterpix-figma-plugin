@@ -55,14 +55,49 @@ export const ImgCol = styled.div`
   width: 50%;
   box-sizing: border-box;
   gap: 8px;
-  
-  & img {
-    width: 100%;
-    transition: 0.15s;
-  
-    &:hover {
-      opacity: 0.8;
-      cursor: pointer;
+
+  div {
+    position: relative;
+
+    img {
+      width: 100%;
+      transition: 0.15s;
+
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+    
+    button {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      visibility: hidden;
+      
+      width: 121px;
+      height: 24px;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      transition: 0.15s;
+
+      font-family: 'Pretendard';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 10px;
+      color: #6B7280;
+
+      &:hover {
+        transition: 0.15s;
+        background-color: rgb(220, 220, 220);
+        cursor: pointer;
+      }
+    }
+    
+    &:hover button {
+      visibility: visible;
     }
   }
 `;
@@ -72,4 +107,8 @@ export const HoverCSS = css`
   opacity: 0.7;
   cursor: pointer;
 }
+`
+
+export const Relative = styled.div`
+  position: relative;
 `

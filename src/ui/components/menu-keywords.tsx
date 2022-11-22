@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Container, Row_CenterCSS, Col_CenterCSS, HoverCSS } from './styled'
+import { Container, HoverCSS, Relative } from './styled'
 
 import banner from '../../images/banner.png';
 import { 
@@ -61,10 +61,10 @@ function MenuKeywords({ setMenu, setPrompt }) {
       <Ul>
       	{keywords.map((value, key) => (
           <Li key={key} onClick={e => searchKeyword(value[1])}>
-            <ImgBox>
+            <Relative>
               <Img src={ value[0] } width="100" height="48" />
               <Gradient></Gradient>
-            </ImgBox>
+            </Relative>
             <Span>{ value[1] }</Span>
           </Li>
        	))}
@@ -111,11 +111,6 @@ const Li = styled.li`
 
   ${HoverCSS}
   transition: 0.15s;
-`
-
-
-const ImgBox = styled.div`
-  position: relative;
 `
 
 

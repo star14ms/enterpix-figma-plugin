@@ -1,17 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Container, Row, Row_Center, ImgCol, HoverCSS } from './styled'
-import { SvgInfo } from './svg'
+import { SvgInfo, SvgArrow } from './svg'
 import CheckboxPlatform from './checkbox-platform'
 
 import { ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
 import useScroll from '../hooks/useScroll';
-import { requestgenerateImageToPlugin } from '../lib/figma';
+import { img2File, createImgItem } from '../lib/utils';
 
 
-function MenuSearch({ setMenu, prompt, setPrompt }) {
+function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
   const { isScrollBottom } = useScroll();
@@ -42,21 +42,14 @@ function MenuSearch({ setMenu, prompt, setPrompt }) {
     let col1H = col1Height, col2H = col2Height
 
     for (const image of images) {
-      const el = document.createElement('img');
-      el.id = image.id
-      el.src = image.compressedUrl
-
-      el.addEventListener('click', async () => {
-        const array = await getImg(image.compressedUrl);
-        requestgenerateImageToPlugin(array, image.width, image.height)
-      });
+      const imageItem = createImgItem(image, getImg, img2File, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
-        imgCol2.current!.appendChild(el);
+        imgCol2.current!.appendChild(imageItem);
       } else {
         col1H = col1H + image.height / image.width;
-        imgCol1.current!.appendChild(el);
+        imgCol1.current!.appendChild(imageItem);
       }
     }
     setCol1Height(col1H)
@@ -161,6 +154,7 @@ const SpanGradient = styled.span`
 const SpanHover = styled.span`
   ${HoverCSS}
 `
+
 
 const Input = styled.input`
   width: 336px;

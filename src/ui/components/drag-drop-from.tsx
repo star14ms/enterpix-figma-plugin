@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { isFileImage } from '../lib/utils'
   
 
-function DragDropForm({ generateImg2Img }) {
+function DragDropForm({ generateImg2Img, file }) {
   const dropArea = useRef(null);
   const labelArea = useRef(null);
 
@@ -51,6 +51,18 @@ function DragDropForm({ generateImg2Img }) {
     await generateImg2Img(file)
   }
 
+  useEffect(() => {
+    if (file) {
+      const dataTranster = new DataTransfer();
+      dataTranster.items.add(file)
+      
+      const input = document.getElementById('fileElem') as HTMLInputElement
+      input.files = dataTranster.files;
+
+      handleGenerateImg2Img(input.files)
+    }
+  }, [file])
+
   return (
     <Container 
       ref={dropArea}
@@ -87,7 +99,7 @@ const Container = styled.div`
   padding: 20px;
   
   &.highlight, &:hover {
-    border-color: purple;
+    border-color: #6D7DFD;
     cursor: pointer;
   }
   
