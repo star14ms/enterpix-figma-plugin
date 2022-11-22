@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Header({ menu, setMenu }) {
+function Header({ menu, setMenu, setPrompt }) {
 
   const SvgSearch = () => {
     return (
@@ -40,7 +40,7 @@ function Header({ menu, setMenu }) {
 
   return (
     <Container>
-      <Div onClick={e => setMenu(0)} className={menu === 0 ? 'is-active' : ''}>
+      <Div onClick={e => { setPrompt(''); setMenu(0) }} className={menu === 0 ? 'is-active' : ''}>
         <SvgSearch></SvgSearch>
         <Span>Search</Span>
       </Div>

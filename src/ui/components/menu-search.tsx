@@ -11,7 +11,7 @@ import useScroll from '../hooks/useScroll';
 import { requestgenerateImageToPlugin } from '../lib/figma';
 
 
-function MenuSearch({ setMenu }) {
+function MenuSearch({ setMenu, prompt, setPrompt }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
   const { isScrollBottom } = useScroll();
@@ -21,7 +21,6 @@ function MenuSearch({ setMenu }) {
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [prompt, setPrompt] = useState("");
   const [platform, setPlatform] = useState({  
     midjourney: true,
     stableDiffusion: true,
@@ -101,6 +100,13 @@ function MenuSearch({ setMenu }) {
   }
 
   useEffect(() => {
+    if (prompt) {
+      gradientRef.current!.classList.add('is-active')
+      generateText2Img(prompt)
+    }
+  }, [])
+
+  useEffect(() => {
     if (isScrollBottom) {
       generateText2ImgAdd()
     }
@@ -114,6 +120,7 @@ function MenuSearch({ setMenu }) {
             ref={inputTextRef} type='text' placeholder='Search images...'
             onKeyPress={e => handleOnKeyPress(e)}
             onChange={e => handleOnChange(e)}
+            defaultValue={prompt}
           >
           </Input>
         </SpanGradient>

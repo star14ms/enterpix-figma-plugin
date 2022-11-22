@@ -20,38 +20,51 @@ import {
   space,
   food,
   technology,
+  interior,
+  texture,
 } from '../../images/keywords';
 
 
-function MenuKeywords() {
+function MenuKeywords({ setMenu, setPrompt }) {
   const keywords = [
-    [fantasy, 'fantasy'],
-    [anime, 'anime'],
-    [horror, 'horror'],
-    [product, 'product'],
-    [monochrome, 'monochrome'],
-    [abstract, 'abstract'],
-    [nature, 'nature'],
-    [animal, 'animal'],
-    [plant, 'plant'],
-    [architecture, 'architecture'],
-    [portrait, 'portrait'],
-    [art, 'art'],
-    [colorful, 'colorful'],
-    [space, 'space'],
-    [food, 'food'],
-    [technology, 'technology'],
+    [fantasy, 'Fantasy'],
+    [anime, 'Anime'],
+    [horror, 'Horror'],
+    [product, 'Product'],
+    [monochrome, 'Monochrome'],
+    [abstract, 'Abstract'],
+    [nature, 'Nature'],
+    [animal, 'Animal'],
+    [plant, 'Plant'],
+    [architecture, 'Architecture'],
+    [portrait, 'Portrait'],
+    [art, 'Art'],
+    [colorful, 'Colorful'],
+    [space, 'Space'],
+    [food, 'Food'],
+    [technology, 'Technology'],
+    [interior, 'Interior'],
+    [texture, 'Texture'],
   ]
+
+  const searchKeyword = (keyword: String) => {
+    setPrompt(keyword)
+    setMenu(0)
+  }
 
   return (
     <Container>
-      <img src={ banner } width="371" height="80" />
+      <A target="_blank" href="https://enterpix.app/">
+        <Img src={ banner } width="371" height="80" />
+      </A>
       
       <Ul>
       	{keywords.map((value, key) => (
-          <Li key={key}> 
-            <Img src={ value[0] } width="100" height="48" />
-            <Gradient></Gradient>
+          <Li key={key} onClick={e => searchKeyword(value[1])}>
+            <ImgBox>
+              <Img src={ value[0] } width="100" height="48" />
+              <Gradient></Gradient>
+            </ImgBox>
             <Span>{ value[1] }</Span>
           </Li>
        	))}
@@ -61,10 +74,18 @@ function MenuKeywords() {
 }
 
 
+const A = styled.a`
+  ${HoverCSS}
+`
+
+
 const Ul = styled.li`
   list-style: none;
   padding-left: 0px;
+  display: flex;
   flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 16px;
 `
 
 
@@ -86,19 +107,26 @@ const Li = styled.li`
   flex: none;
   order: 0;
   flex-grow: 0;
+
+  ${HoverCSS}
+  transition: 0.15s;
+`
+
+
+const ImgBox = styled.div`
+  position: relative;
 `
 
 
 const Gradient = styled.div`
-position: absolute;
-width: 40px;
-height: 48px;
-right: 0px;
-top: calc(50% - 48px/2);
-
-background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+  position: absolute;
+  width: 40px;
+  height: 48px;
+  right: 0px;
+  top: calc(50% - 48px/2);
+  
+  background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
 `
-
 
 
 const Span = styled.span`

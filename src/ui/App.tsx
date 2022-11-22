@@ -9,20 +9,21 @@ import MenuInfo from './components/menu-info';
 
 function App() {
   const [menu, setMenu] = useState(0);
+  const [prompt, setPrompt] = useState("");
 
   return (
     <Container>
-      <Header menu={menu} setMenu={setMenu}></Header>
+      <Header menu={menu} setMenu={setMenu} setPrompt={setPrompt}></Header>
       
       <Main>
         {menu === 0 && 
-          <MenuSearch setMenu={setMenu}></MenuSearch>
+          <MenuSearch setMenu={setMenu} prompt={prompt} setPrompt={setPrompt}></MenuSearch>
         }
         {menu === 1 && 
           <MenuImageSearch></MenuImageSearch>
         }
         {menu === 2 && 
-          <MenuKeywords></MenuKeywords>
+          <MenuKeywords setMenu={setMenu} setPrompt={setPrompt}></MenuKeywords>
         }
         {menu === 3 && 
           <MenuInfo></MenuInfo>
