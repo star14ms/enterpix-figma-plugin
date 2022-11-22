@@ -54,7 +54,6 @@ export const ImgCol = styled.div`
   flex-direction: column;
   width: 50%;
   box-sizing: border-box;
-  margin: 16px 0;
   gap: 8px;
   
   & img {

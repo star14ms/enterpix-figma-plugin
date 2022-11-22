@@ -83,7 +83,7 @@ const Container = styled.div`
   border-radius: 20px;
   width: 340px;
   height: 100%;
-  margin: 16px auto 0;
+  margin: 0 auto;
   padding: 20px;
   
   &.highlight, &:hover {
@@ -92,7 +92,7 @@ const Container = styled.div`
   }
   
   &.uploaded {
-    height: calc(200px / 1.618);
+    height: 100px;
   }
   
   a {
@@ -116,7 +116,7 @@ const Container = styled.div`
   }
   
   #gallery img {
-    width: 100px;
+    height: 100px;
     vertical-align: middle;
   }
   

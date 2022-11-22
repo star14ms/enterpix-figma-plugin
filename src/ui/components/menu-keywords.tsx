@@ -79,12 +79,13 @@ const A = styled.a`
 `
 
 
-const Ul = styled.li`
+const Ul = styled.ul`
   list-style: none;
   padding-left: 0px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin: 0;
   padding-bottom: 16px;
 `
 

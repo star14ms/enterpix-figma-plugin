@@ -1,5 +1,5 @@
 import React from 'react';
-import { RowCSS } from './styled'
+import { Row } from './styled'
 import styled from 'styled-components';
 
 
@@ -20,7 +20,7 @@ function CheckboxPlatform({ state, setState }) {
   }
 
   return (
-    <RowMarginTop>
+    <Row>
       <Label htmlFor='midjourney' className='container'>
         Midjourney
         <input 
@@ -38,15 +38,9 @@ function CheckboxPlatform({ state, setState }) {
         />
         <span className='checkmark'></span>
       </Label>
-    </RowMarginTop>
+    </Row>
   );
 }
-
-
-export const RowMarginTop = styled.div`
-  ${RowCSS}
-  margin-top: 16px;
-`;
 
 
 const Label = styled.label`
