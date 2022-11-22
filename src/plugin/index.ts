@@ -31,17 +31,25 @@ function isPayload(payload: unknown): payload is PluginMessagePayload {
 
 
 async function generateImage({ array, width, height }: generateImagePayload) {
-  const rectanglenode = figma.createRectangle();
-  if (!width || !height) {
-    width = 500
-    height = 500
-  }
-  rectanglenode.resize(width, height);
   const imageHash = figma.createImage(array).hash;
-  rectanglenode.fills = [
-    { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
-  ];
-  figma.currentPage.appendChild(rectanglenode);
+  const currentSelectionNode = figma.currentPage.selection[0];
+
+  if (currentSelectionNode?.type === 'RECTANGLE') {
+    currentSelectionNode.fills = [
+      { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
+    ];
+  } else {
+    const rectanglenode = figma.createRectangle();
+    if (!width || !height) {
+      width = 500
+      height = 500
+    }
+    rectanglenode.resize(width, height);
+    rectanglenode.fills = [
+      { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
+    ];
+    figma.currentPage.appendChild(rectanglenode);
+  }
 }
 
 
