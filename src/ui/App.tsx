@@ -1,29 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { Container } from './components/styled'
 import Header from './components/header'
 import Search from './components/search';
 import ImageSearch from './components/image-search';
+import Info from './components/info';
 
 
 function App() {
-  const [headerMenu, setHeaderMenu] = useState(0);
+  const [menu, setMenu] = useState(0);
 
   return (
     <Container>
-      <Header headerMenu={headerMenu} setHeaderMenu={setHeaderMenu}></Header>
+      <Header menu={menu} setMenu={setMenu}></Header>
       
       <Main>
-        {headerMenu === 0 && 
-          <Search></Search>
+        {menu === 0 &&
+          <Search setMenu={setMenu}></Search>
         }
-        {headerMenu === 1 && 
+        {menu === 1 && 
           <ImageSearch></ImageSearch>
+        }
+        {menu === 3 &&
+          <Info></Info>
         }
       </Main>
     </Container>
   );
 }
+
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+`;
 
 
 const Main = styled.div`

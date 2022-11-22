@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-function Header({ headerMenu, setHeaderMenu }) {
+function Header({ menu, setMenu }) {
 
   const SvgSearch = () => {
     return (
@@ -35,22 +35,22 @@ function Header({ headerMenu, setHeaderMenu }) {
   }
 
   const strokeColor = (menuNum: Number) => {
-    return menuNum === headerMenu ? '#6D7DFD' : '#9CA3AF'
+    return menuNum === menu ? '#6D7DFD' : '#9CA3AF'
   }
 
   return (
     <Container>
-      <Div onClick={e => setHeaderMenu(0)} className={headerMenu === 0 ? 'is-active' : ''}>
+      <Div onClick={e => setMenu(0)} className={menu === 0 ? 'is-active' : ''}>
         <SvgSearch></SvgSearch>
         <Span>Search</Span>
       </Div>
 
-      <Div onClick={e => setHeaderMenu(1)} className={headerMenu === 1 ? 'is-active' : ''}>
+      <Div onClick={e => setMenu(1)} className={menu === 1 ? 'is-active' : ''}>
         <SvgImageSearch></SvgImageSearch>
         <Span>Image Search</Span>
       </Div>
 
-      <Div onClick={e => setHeaderMenu(2)} className={headerMenu === 2 ? 'is-active' : ''}>
+      <Div onClick={e => setMenu(2)} className={menu === 2 ? 'is-active' : ''}>
         <SvgKeywords></SvgKeywords>
         <Span>KeyWords</Span>
       </Div>
@@ -61,19 +61,12 @@ function Header({ headerMenu, setHeaderMenu }) {
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
   padding: 4px 10px;
   gap: 4px;
   border-bottom: 2px solid #F3F4F6;
   
   height: 28px;
-  
-  /* Enterpix/white */
-  
-  background: #FFFFFF;
-  
-  /* Inside auto layout */
   
   flex: none;
   align-self: stretch;

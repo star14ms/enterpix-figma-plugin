@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container, Row, RowAlignCenter, ImgCol } from './styled'
+import { Container, Row, Row_Center, ImgCol, HoverCSS } from './styled'
 import { SvgInfo } from './icons'
 import CheckboxPlatform from './checkbox-platform'
 
@@ -11,7 +11,7 @@ import useScroll from '../hooks/useScroll';
 import { requestgenerateImageToPlugin } from '../lib/figma';
 
 
-function Search() {
+function Search({ setMenu }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
   const { isScrollBottom } = useScroll();
@@ -108,7 +108,7 @@ function Search() {
 
   return (
     <Container>
-      <RowAlignCenter>
+      <Row_Center>
         <SpanGradient ref={gradientRef}>
           <Input 
             ref={inputTextRef} type='text' placeholder='Search images...'
@@ -118,9 +118,10 @@ function Search() {
           </Input>
         </SpanGradient>
 
-        <SvgInfo></SvgInfo>
-      </RowAlignCenter>
-
+        <SpanHover onClick={e => setMenu(3)}>
+          <SvgInfo></SvgInfo>
+        </SpanHover>
+      </Row_Center>
 
       <CheckboxPlatform state={platform} setState={setPlatform}></CheckboxPlatform>
 
@@ -149,6 +150,10 @@ const SpanGradient = styled.span`
   }
 `
 
+
+const SpanHover = styled.span`
+  ${HoverCSS}
+`
 
 const Input = styled.input`
   width: 336px;
