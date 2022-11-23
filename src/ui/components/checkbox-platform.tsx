@@ -1,6 +1,6 @@
 import React from 'react';
-import { Row } from './styled'
 import styled from 'styled-components';
+import { Row } from './styled'
 
 
 function CheckboxPlatform({ state, setState }) {

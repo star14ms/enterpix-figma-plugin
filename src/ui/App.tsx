@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Header from './components/header'
-import MenuSearch from './components/menu-search';
-import MenuImageSearch from './components/menu-image-search';
-import MenuKeywords from './components/menu-keywords';
-import MenuInfo from './components/menu-info';
+import MenuSearch from './components/menu-0-search';
+import MenuImageSearch from './components/menu-1-image-search';
+import MenuKeywords from './components/menu-2-keywords';
+import MenuInfo from './components/menu-3-info';
 import useScroll from './hooks/useScroll';
 
 

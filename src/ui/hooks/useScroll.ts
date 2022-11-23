@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+
 export default function useScroll() {
   const [scrollY, setScrollY] = useState<number>(0);
   const [isScrollBottom, setIsScrollBottom] = useState<boolean>(false)

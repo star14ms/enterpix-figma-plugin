@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Container, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS } from './styled'
-import { SvgInfo, SvgArrow } from './svg'
+import { SvgInfo } from './svg'
 import SelectPlatform from './platform-select';
 
 import { ImageData, ResponseJson } from '../../shared/api'

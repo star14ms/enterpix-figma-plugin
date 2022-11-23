@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ImageData, ResponseJson } from '../../shared/api'
 import { Container, Row, FlexEnd, ImgCol } from './styled'
 import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
+
+import { ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
-
 import { SearchSimilar, createImgItem } from '../lib/utils';
 
 

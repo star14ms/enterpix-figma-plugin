@@ -1,50 +1,31 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Container, HoverOpacityCSS, DivRelative } from './styled'
 
 import banner from '../../images/banner.png';
-import { 
-  fantasy,
-  anime,
-  horror,
-  product,
-  monochrome,
-  abstract,
-  nature,
-  animal,
-  plant,
-  architecture,
-  portrait,
-  art,
-  colorful,
-  space,
-  food,
-  technology,
-  interior,
-  texture,
-} from '../../images/keywords';
+import * as image from '../../images/keywords';
 
 
 function MenuKeywords({ setMenu, setPrompt }) {
   const keywords = [
-    [fantasy, 'Fantasy'],
-    [anime, 'Anime'],
-    [horror, 'Horror'],
-    [product, 'Product'],
-    [monochrome, 'Monochrome'],
-    [abstract, 'Abstract'],
-    [nature, 'Nature'],
-    [animal, 'Animal'],
-    [plant, 'Plant'],
-    [architecture, 'Architecture'],
-    [portrait, 'Portrait'],
-    [art, 'Art'],
-    [colorful, 'Colorful'],
-    [space, 'Space'],
-    [food, 'Food'],
-    [technology, 'Technology'],
-    [interior, 'Interior'],
-    [texture, 'Texture'],
+    [image.fantasy, 'Fantasy'],
+    [image.anime, 'Anime'],
+    [image.horror, 'Horror'],
+    [image.product, 'Product'],
+    [image.monochrome, 'Monochrome'],
+    [image.abstract, 'Abstract'],
+    [image.nature, 'Nature'],
+    [image.animal, 'Animal'],
+    [image.plant, 'Plant'],
+    [image.architecture, 'Architecture'],
+    [image.portrait, 'Portrait'],
+    [image.art, 'Art'],
+    [image.colorful, 'Colorful'],
+    [image.space, 'Space'],
+    [image.food, 'Food'],
+    [image.technology, 'Technology'],
+    [image.interior, 'Interior'],
+    [image.texture, 'Texture'],
   ]
 
   const searchKeyword = (keyword: String) => {

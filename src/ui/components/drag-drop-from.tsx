@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Col_Center, Col_CenterCSS, HoverBrightnessCSS } from './styled';
+import { Col_CenterCSS, HoverBrightnessCSS } from './styled';
 import { SvgUpload, SvgClear } from './svg';
 
 import { isFileImage } from '../lib/utils'
