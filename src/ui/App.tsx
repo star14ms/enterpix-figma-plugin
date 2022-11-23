@@ -5,30 +5,32 @@ import MenuSearch from './components/menu-search';
 import MenuImageSearch from './components/menu-image-search';
 import MenuKeywords from './components/menu-keywords';
 import MenuInfo from './components/menu-info';
+import useScroll from './hooks/useScroll';
 
 
 function App() {
   const [menu, setMenu] = useState(0);
   const [prompt, setPrompt] = useState("");
   const [file, setFile] = useState<File>(null);
+  const { isScrollBottom } = useScroll();
 
   return (
     <Container>
-      <Header menu={menu} setMenu={setMenu} setPrompt={setPrompt} setFile={setFile}></Header>
+      <Header menu={menu} setMenu={setMenu}></Header>
       
       <Main>
-        {menu === 0 && 
-          <MenuSearch setMenu={setMenu} prompt={prompt} setPrompt={setPrompt} setFile={setFile}></MenuSearch>
-        }
-        {menu === 1 && 
-          <MenuImageSearch setMenu={setMenu} file={file} setFile={setFile}></MenuImageSearch>
-        }
-        {menu === 2 && 
-          <MenuKeywords setMenu={setMenu} setPrompt={setPrompt}></MenuKeywords>
-        }
-        {menu === 3 && 
-          <MenuInfo></MenuInfo>
-        }
+        <div className={'menu-item' + (menu === 0 ? ' is-active' : '' )}>
+          <MenuSearch prompt={prompt} setPrompt={setPrompt} isScrollBottom={isScrollBottom} menu={menu} setMenu={setMenu} setFile={setFile} />
+        </div>
+        <div className={'menu-item' + (menu === 1 ? ' is-active' : '' )}>
+          <MenuImageSearch file={file} setFile={setFile} isScrollBottom={isScrollBottom} menu={menu} setMenu={setMenu} />
+        </div>
+        <div className={'menu-item' + (menu === 2 ? ' is-active' : '' )}>
+          <MenuKeywords setPrompt={setPrompt} setMenu={setMenu} />
+        </div>
+        <div className={'menu-item' + (menu === 3 ? ' is-active' : '' )}>
+          <MenuInfo/>
+        </div>
       </Main>
     </Container>
   );
@@ -54,6 +56,10 @@ export const Container = styled.div`
 const Main = styled.div`
   margin: 16px;
   height: 100%;
+
+  .menu-item:not(.is-active) {
+    display: none;
+  }
 `
 
 

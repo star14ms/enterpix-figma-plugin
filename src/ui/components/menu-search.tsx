@@ -7,14 +7,12 @@ import SelectPlatform from './platform-select';
 import { ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
-import useScroll from '../hooks/useScroll';
 import { SearchSimilar, createImgItem } from '../lib/utils';
 
 
-function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
+function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
-  const { isScrollBottom } = useScroll();
   
   const gradientRef = useRef(null);
   const inputTextRef = useRef(null);
@@ -101,13 +99,21 @@ function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
 
   useEffect(() => {
     if (prompt) {
+      inputTextRef.current!.value = prompt
       gradientRef.current!.classList.add('is-active')
       generateText2Img(prompt)
     }
-  }, [])
+  }, [prompt])
 
   useEffect(() => {
-    if (isScrollBottom) {
+    if (inputTextRef.current!.value) {
+      gradientRef.current!.classList.add('is-active')
+      generateText2Img(prompt)
+    }
+  }, [platform])
+
+  useEffect(() => {
+    if (menu === 0 || isScrollBottom) {
       generateText2ImgAdd()
     }
   }, [isScrollBottom])

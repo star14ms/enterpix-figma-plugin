@@ -5,15 +5,13 @@ import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
-import useScroll from '../hooks/useScroll';
 
 import { SearchSimilar, createImgItem } from '../lib/utils';
 
 
-function MenuImageSearch({ file, setFile, setMenu }){
+function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
   const getImg = useGetImg();
   const getImg2Img = useImg2Img();
-  const { isScrollBottom } = useScroll();
   
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
@@ -82,7 +80,7 @@ function MenuImageSearch({ file, setFile, setMenu }){
   }
 
   useEffect(() => {
-    if (isScrollBottom) {
+    if (menu === 1 && isScrollBottom) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])

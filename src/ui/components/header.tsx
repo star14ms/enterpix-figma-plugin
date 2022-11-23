@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { HoverBackgroundCSS } from './styled'
 
 
-function Header({ menu, setMenu, setPrompt, setFile }) {
+function Header({ menu, setMenu }) {
 
   const SvgSearch = () => {
     return (
@@ -41,12 +41,12 @@ function Header({ menu, setMenu, setPrompt, setFile }) {
 
   return (
     <Container>
-      <Div onClick={e => { setPrompt(''); setMenu(0) }} className={menu === 0 ? 'is-active' : ''}>
+      <Div onClick={e => { setMenu(0) }} className={menu === 0 ? 'is-active' : ''}>
         <SvgSearch></SvgSearch>
         <Span>Search</Span>
       </Div>
 
-      <Div onClick={e => { setFile(null); setMenu(1) }} className={menu === 1 ? 'is-active' : ''}>
+      <Div onClick={e => { setMenu(1) }} className={menu === 1 ? 'is-active' : ''}>
         <SvgImageSearch></SvgImageSearch>
         <Span>Image Search</Span>
       </Div>
