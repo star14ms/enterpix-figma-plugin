@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { HoverBackgroundCSS } from './styled'
 
 
 function Header({ menu, setMenu, setPrompt, setFile }) {
@@ -99,14 +100,7 @@ const Div = styled.div`
     color: #6D7DFD;
   }
   
-  &:hover {
-    background-color: rgb(240, 240, 240);
-    cursor: pointer;
-  }
-  
-  &:active {
-    background-color: rgb(220, 220, 220);
-  }
+  ${HoverBackgroundCSS}
 `
 
 

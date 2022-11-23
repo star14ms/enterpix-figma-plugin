@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SvgBook, SvgLogo, SvgHeart, SvgPhoto, SvgDiscord } from './svg'
-import { Container, Row_CenterCSS, Col_CenterCSS, HoverCSS } from './styled'
+import { Container, Row_CenterCSS, Col_CenterCSS, HoverOpacityCSS } from './styled'
 import styled, { css } from 'styled-components';
 
 
@@ -98,7 +98,7 @@ const Row_Center_Gap48 = styled.div`
   gap: 48px;
 
   a {
-    ${HoverCSS}
+    ${HoverOpacityCSS}
     font-family: 'Pretendard';
     font-style: normal;
     font-weight: 500;
@@ -125,7 +125,7 @@ const Div = styled.div`
 
 const Button = styled.button`
   ${Row_CenterCSS}
-  ${HoverCSS}
+  ${HoverOpacityCSS}
   border-radius: 12px;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
   transition: 0.15s;

@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
-import { Col_Center, Col_CenterCSS, HoverCSS } from './styled';
+import { Col_Center, Col_CenterCSS, HoverBrightnessCSS } from './styled';
 import { SvgUpload, SvgClear } from './svg';
 
 import { isFileImage } from '../lib/utils'
   
 
-function DragDropForm({ generateImg2Img, file, setFile }) {
+function DragDropForm({ file, setFile, platform, generateImg2Img }) {
   const dropArea = useRef(null);
   const labelArea = useRef(null);
 
@@ -71,7 +71,7 @@ function DragDropForm({ generateImg2Img, file, setFile }) {
 
       handleGenerateImg2Img(input.files)
     }
-  }, [file])
+  }, [file, platform])
 
   return (
     <Container 
@@ -188,10 +188,7 @@ const Button = styled.span`
   top: -12px;
   right: -12px;
 
-  &:hover {
-    cursor: pointer;
-    filter: brightness(85%);
-  }
+  ${HoverBrightnessCSS}
 `
 
 

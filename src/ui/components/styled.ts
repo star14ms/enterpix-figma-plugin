@@ -9,6 +9,7 @@ export const Container = styled.div`
   height: 100%;
   box-sizing: border-box;
   gap: 16px;
+  color: #9CA3AF;
 `;
 
 export const RowCSS = css`
@@ -49,6 +50,70 @@ export const Row_Center = styled.div`
   ${Row_CenterCSS}
 `;
 
+export const HoverOpacityCSS = css`
+  &:hover {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+`
+
+export const HoverBrightnessCSS = css`
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
+  }
+`
+
+export const HoverBackgroundCSS = css`
+  &:hover {
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
+  }
+  
+  &:active {
+    background-color: rgb(220, 220, 220);
+  }
+`
+
+export const DivRelative = styled.div`
+  position: relative;
+`
+
+export const FlexEnd = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: calc(400px - 16px*2);
+  gap: 12px;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+
+  span.btn-clear {
+    border-radius: 0.5rem;
+    padding: 0 6px;
+
+    &:not(.disabled) {
+      color: #9CA3AF;
+      font-weight: 600;
+      ${HoverBackgroundCSS}
+    }
+
+    &.disabled {
+      color: #D1D5DB;
+    }
+  }
+  
+  span.select-platform {
+    display: flex;
+    padding-right: 8px;
+    color: #9CA3AF;
+    gap: 8px;
+  }
+`
+
 export const ImgCol = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,10 +138,15 @@ export const ImgCol = styled.div`
       position: absolute;
       bottom: 6px;
       right: 6px;
+      display: flex;
+      align-items: center;
       visibility: hidden;
-      
+
       width: 121px;
       height: 24px;
+      padding: 6px 6px 6px 10px;
+      gap: 2px;
+
       background: #FFFFFF;
       border: 1px solid #E5E7EB;
       border-radius: 8px;
@@ -101,14 +171,3 @@ export const ImgCol = styled.div`
     }
   }
 `;
-
-export const HoverCSS = css`
-&:hover {
-  opacity: 0.7;
-  cursor: pointer;
-}
-`
-
-export const Relative = styled.div`
-  position: relative;
-`

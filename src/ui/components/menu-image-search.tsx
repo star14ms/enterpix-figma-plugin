@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ImageData, ResponseJson } from '../../shared/api'
-import { Container, Row, ImgCol } from './styled'
+import { Container, Row, FlexEnd, ImgCol } from './styled'
+import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
@@ -24,13 +25,12 @@ function MenuImageSearch({ file, setFile, setMenu }){
   const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
+  const [canClear, setCanClear] = useState(false);
 
   const showImages = (images: ImageData[], add: boolean = false) => {
     if (!add) {
       setCol1Height(0)
       setCol2Height(0)
-      imgCol2.current!.replaceChildren();
-      imgCol1.current!.replaceChildren();
     }
 
     // console.log(col1Height, col2Height)
@@ -58,6 +58,7 @@ function MenuImageSearch({ file, setFile, setMenu }){
     setFile(file)
     const json = await getImg2Img(file, platform);
     postRequest(json, false)
+    setCanClear(true)
   }
 
   const generateImg2ImgAdd = async () => {
@@ -74,6 +75,12 @@ function MenuImageSearch({ file, setFile, setMenu }){
     setIsLoading(false)
   }
 
+  const ClearResult = () => {
+    imgCol1.current!.replaceChildren()
+    imgCol2.current!.replaceChildren()
+    setCanClear(false)
+  }
+
   useEffect(() => {
     if (isScrollBottom) {
       generateImg2ImgAdd()
@@ -82,10 +89,20 @@ function MenuImageSearch({ file, setFile, setMenu }){
 
   return (
     <Container>
-      <DragDropForm generateImg2Img={generateImg2Img} file={file} setFile={setFile}></DragDropForm>
+      <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} platform={platform}></DragDropForm>
 
       {file && 
         <>
+        <FlexEnd>
+          <span onClick={e => canClear ? ClearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+            Clear
+          </span>
+          <span className="select-platform">
+            <span>Filter by</span>
+            <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
+          </span>
+        </FlexEnd>
+
         <Row>
           <ImgCol ref={imgCol1}></ImgCol>
           <ImgCol ref={imgCol2}></ImgCol>

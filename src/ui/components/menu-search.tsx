@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container, Row, Row_Center, ImgCol, HoverCSS } from './styled'
+import { Container, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS } from './styled'
 import { SvgInfo, SvgArrow } from './svg'
-import CheckboxPlatform from './checkbox-platform'
+import SelectPlatform from './platform-select';
 
 import { ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
@@ -28,13 +28,12 @@ function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
   const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
+  const [canClear, setCanClear] = useState(false);
 
   const showImages = (images: ImageData[], add: boolean = false) => {
     if (!add) {
       setCol1Height(0)
       setCol2Height(0)
-      imgCol2.current!.replaceChildren();
-      imgCol1.current!.replaceChildren();
     }
 
     // console.log(col1Height, col2Height)
@@ -59,9 +58,11 @@ function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
   const generateText2Img = async (prompt: string) => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
+    ClearResult()
     setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, platform);
     postRequest(json, false)
+    setCanClear(true)
   };
 
   const generateText2ImgAdd = async () => {
@@ -90,6 +91,12 @@ function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
       showImages(json.images, add);
     }
     setIsLoading(false)
+  }
+
+  const ClearResult = () => {
+    imgCol1.current!.replaceChildren()
+    imgCol2.current!.replaceChildren()
+    setCanClear(false)
   }
 
   useEffect(() => {
@@ -123,7 +130,15 @@ function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
         </SpanHover>
       </Row_Center>
 
-      <CheckboxPlatform state={platform} setState={setPlatform}></CheckboxPlatform>
+      <FlexEnd>
+        <span onClick={e => canClear ? ClearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+          Clear
+        </span>
+        <span className="select-platform">
+          <span>Filter by</span>
+          <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
+        </span>
+      </FlexEnd>
 
       <Row>
         <ImgCol ref={imgCol1}></ImgCol>
@@ -152,7 +167,7 @@ const SpanGradient = styled.span`
 
 
 const SpanHover = styled.span`
-  ${HoverCSS}
+  ${HoverOpacityCSS}
 `
 
 
