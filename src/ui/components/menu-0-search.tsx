@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Container, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS } from './styled'
 import { SvgInfo } from './svg'
 import SelectPlatform from './platform-select';
+import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
 import useScroll from '../hooks/useScroll';
 
@@ -12,7 +13,7 @@ import useGetImg from '../hooks/useGetImg';
 import { searchSimilar, createImgItem } from '../lib/utils';
 
 
-function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile }) {
+function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
   const { isScrollTop, isScrollBottom } = useScroll();
@@ -27,6 +28,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
   const [canClear, setCanClear] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   const showImages = (images: ImageData[], add: boolean = false) => {
     let col1H: number, col2H: number
@@ -40,7 +42,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
     }
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, searchSimilar, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, searchSimilar, setSelectedImage, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -120,32 +122,37 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
   }, [isScrollBottom])
 
   return (
+    <>
     <Container>
-      <Row_Center>
-        <SpanGradient ref={gradientRef}>
-          <Input 
-            ref={inputTextRef} type='text' placeholder='Search images...'
-            onKeyPress={e => handleOnKeyPress(e)}
-            onChange={e => handleOnChange(e)}
-            defaultValue={prompt}
-          >
-          </Input>
-        </SpanGradient>
+      <Container className={selectedImage ? 'hidden' : ''}>
+        <Row_Center>
+          <SpanGradient ref={gradientRef}>
+            <Input 
+              ref={inputTextRef} type='text' placeholder='Search images...'
+              onKeyPress={e => handleOnKeyPress(e)}
+              onChange={e => handleOnChange(e)}
+              defaultValue={prompt}
+            >
+            </Input>
+          </SpanGradient>
+  
+          <SpanHover onClick={e => setMenu(3)}>
+            <SvgInfo />
+          </SpanHover>
+        </Row_Center>
+  
+        <FlexEnd>
+          <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+            Clear
+          </span>
+          <span className="select-platform">
+            <span>Filter by</span>
+            <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
+          </span>
+        </FlexEnd>
+      </Container>
 
-        <SpanHover onClick={e => setMenu(3)}>
-          <SvgInfo />
-        </SpanHover>
-      </Row_Center>
-
-      <FlexEnd>
-        <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
-          Clear
-        </span>
-        <span className="select-platform">
-          <span>Filter by</span>
-          <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
-        </span>
-      </FlexEnd>
+      <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} setFile={setFile} setMenu={setMenu}/>
 
       <Row>
         <ImgCol ref={imgCol1}></ImgCol>
@@ -156,6 +163,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
  
       <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
     </Container>
+    </>
   );
 }
 

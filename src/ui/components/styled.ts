@@ -74,6 +74,8 @@ export const HoverBrightnessCSS = css`
 `
 
 export const HoverBackgroundCSS = css`
+  background-color: rgb(255, 255, 255);
+
   &:hover {
     background-color: rgb(240, 240, 240);
     cursor: pointer;

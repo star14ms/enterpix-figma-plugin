@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function useScroll() {
   const [scrollY, setScrollY] = useState<number>(0);
+  const [isScrollTop, setIsScrollTop] = useState<boolean>(true)
   const [isScrollBottom, setIsScrollBottom] = useState<boolean>(false)
 
   // TODO - resize 시 고려
@@ -10,7 +11,8 @@ export default function useScroll() {
 
   const listener = () => {
     setScrollY(window.pageYOffset);
-    setIsScrollBottom(body.scrollHeight <= body.scrollTop + body.clientHeight) 
+    setIsScrollBottom(body.scrollHeight <= body.scrollTop + body.clientHeight)
+    setIsScrollTop(body.scrollTop === 0)
   };
   
   // TODO - 메모리 누수 여부 확인
@@ -24,6 +26,7 @@ export default function useScroll() {
 
   return {
     scrollY,
+    isScrollTop,
     isScrollBottom,
   };
 }

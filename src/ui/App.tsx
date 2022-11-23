@@ -5,14 +5,11 @@ import MenuSearch from './components/menu-0-search';
 import MenuImageSearch from './components/menu-1-image-search';
 import MenuKeywords from './components/menu-2-keywords';
 import MenuInfo from './components/menu-3-info';
-import useScroll from './hooks/useScroll';
-
 
 function App() {
   const [menu, setMenu] = useState(0);
   const [prompt, setPrompt] = useState("");
   const [file, setFile] = useState<File>(null);
-  const { isScrollBottom } = useScroll();
 
   return (
     <Container>
@@ -20,10 +17,10 @@ function App() {
       
       <Main>
         <div className={'menu-item' + (menu === 0 ? ' is-active' : '' )}>
-          <MenuSearch prompt={prompt} setPrompt={setPrompt} isScrollBottom={isScrollBottom} menu={menu} setMenu={setMenu} setFile={setFile} />
+          <MenuSearch prompt={prompt} setPrompt={setPrompt} menu={menu} setMenu={setMenu} setFile={setFile} />
         </div>
         <div className={'menu-item' + (menu === 1 ? ' is-active' : '' )}>
-          <MenuImageSearch file={file} setFile={setFile} isScrollBottom={isScrollBottom} menu={menu} setMenu={setMenu} />
+          <MenuImageSearch file={file} setFile={setFile} menu={menu} setMenu={setMenu} />
         </div>
         <div className={'menu-item' + (menu === 2 ? ' is-active' : '' )}>
           <MenuKeywords setPrompt={setPrompt} setMenu={setMenu} />

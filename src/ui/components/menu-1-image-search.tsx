@@ -3,6 +3,8 @@ import { Container, Row, FlexEnd, ImgCol } from './styled'
 import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
 import ImageDetail from './image-detail';
+import useScroll from '../hooks/useScroll';
+import ButtonScrollTop from './btn-scroll-top';
 
 import { ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
@@ -13,6 +15,7 @@ import { searchSimilar, createImgItem } from '../lib/utils';
 function MenuImageSearch({ file, setFile, menu, setMenu }){
   const getImg = useGetImg();
   const getImg2Img = useImg2Img();
+  const { isScrollTop, isScrollBottom } = useScroll();
   
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
@@ -118,6 +121,8 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
       }
 
       {isLoading ? 'Loading...' : ''}
+
+      <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
     </Container>
     </>
     );
