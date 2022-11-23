@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Container, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS } from './styled'
 import { SvgInfo } from './svg'
 import SelectPlatform from './platform-select';
+import ButtonScrollTop from './btn-scroll-top';
+import useScroll from '../hooks/useScroll';
 
 import { ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
@@ -13,6 +15,7 @@ import { searchSimilar, createImgItem } from '../lib/utils';
 function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
+  const { isScrollTop, isScrollBottom } = useScroll();
   
   const gradientRef = useRef(null);
   const inputTextRef = useRef(null);
@@ -150,6 +153,8 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
       </Row>
 
       {isLoading ? 'Loading...' : ''}
+ 
+      <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
     </Container>
   );
 }

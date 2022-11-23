@@ -10,6 +10,10 @@ export const Container = styled.div`
   box-sizing: border-box;
   gap: 16px;
   color: #9CA3AF;
+
+  &.hidden {
+    display: none;
+  }
 `;
 
 export const RowCSS = css`
@@ -20,13 +24,18 @@ export const RowCSS = css`
   gap: 8px;
 `;
 
-export const Col = styled.div`
+export const ColCSS = css`
   ${RowCSS}
   flex-direction: column;
 `;
 
 export const Row = styled.div`
   ${RowCSS}
+`;
+
+export const Col = styled.div`
+  ${RowCSS}
+  flex-direction: column;
 `;
 
 export const Col_CenterCSS = css`

@@ -58,7 +58,7 @@ export async function searchSimilar(id: string, setFile: Function, setMenu: Func
 
 
 export function createImgItem(
-  image: ImageData, getImg: Function, searchSimilar: Function, 
+  image: ImageData, getImg: Function, searchSimilar: Function, setSelectedImage: Function,
   setFile: React.Dispatch<React.SetStateAction<number>>,
   setMenu?: React.Dispatch<React.SetStateAction<number>>,
 ) {
@@ -70,6 +70,8 @@ export function createImgItem(
   img.addEventListener('click', async () => {
     const array = await getImg(image.compressedUrl);
     requestgenerateImageToPlugin(array, image.width, image.height)
+    window.scrollTo({ top: 0 })
+    setSelectedImage(image)
   });
 
   const button = document.createElement('button');

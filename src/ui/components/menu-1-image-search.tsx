@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Container, Row, FlexEnd, ImgCol } from './styled'
 import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
+import ImageDetail from './image-detail';
 
 import { ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
@@ -9,7 +10,7 @@ import useGetImg from '../hooks/useGetImg';
 import { searchSimilar, createImgItem } from '../lib/utils';
 
 
-function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
+function MenuImageSearch({ file, setFile, menu, setMenu }){
   const getImg = useGetImg();
   const getImg2Img = useImg2Img();
   
@@ -21,6 +22,7 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
   const [canClear, setCanClear] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   const showImages = (images: ImageData[], add: boolean = false) => {
     let col1H: number, col2H: number
@@ -34,7 +36,7 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
     }
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, searchSimilar, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, searchSimilar, setSelectedImage, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -84,20 +86,29 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
   }, [isScrollBottom])
 
   return (
+    <>
     <Container>
-      <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} platform={platform}></DragDropForm>
+      <Container className={selectedImage ? 'hidden' : ''}>
+        <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} platform={platform}></DragDropForm>
+
+        {file && 
+          <>
+          <FlexEnd>
+            <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+              Clear
+            </span>
+            <span className="select-platform">
+              <span>Filter by</span>
+              <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
+            </span>
+          </FlexEnd>
+          </>
+        }
+      </Container>
 
       {file && 
         <>
-        <FlexEnd>
-          <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
-            Clear
-          </span>
-          <span className="select-platform">
-            <span>Filter by</span>
-            <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
-          </span>
-        </FlexEnd>
+        <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} setFile={setFile} setMenu={setMenu}/>
 
         <Row>
           <ImgCol ref={imgCol1}></ImgCol>
@@ -108,7 +119,8 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
 
       {isLoading ? 'Loading...' : ''}
     </Container>
-  );
+    </>
+    );
 }
 
 export default MenuImageSearch;
