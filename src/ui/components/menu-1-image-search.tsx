@@ -6,7 +6,7 @@ import DragDropForm from './drag-drop-from'
 import { ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
-import { SearchSimilar, createImgItem } from '../lib/utils';
+import { searchSimilar, createImgItem } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
@@ -16,10 +16,7 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [platform, setPlatform] = useState({  
-    midjourney: true,
-    stableDiffusion: true,
-  })
+  const [platform, setPlatform] = useState({  midjourney: true, stableDiffusion: true })
   const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
@@ -37,7 +34,7 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
     }
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, SearchSimilar, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, searchSimilar, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -74,7 +71,7 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
     setIsLoading(false)
   }
 
-  const ClearResult = () => {
+  const clearResult = () => {
     imgCol1.current!.replaceChildren()
     imgCol2.current!.replaceChildren()
     setCanClear(false)
@@ -93,7 +90,7 @@ function MenuImageSearch({ file, setFile, isScrollBottom, menu, setMenu }){
       {file && 
         <>
         <FlexEnd>
-          <span onClick={e => canClear ? ClearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+          <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
             Clear
           </span>
           <span className="select-platform">

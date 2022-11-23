@@ -42,17 +42,17 @@ function Header({ menu, setMenu }) {
   return (
     <Container>
       <Div onClick={e => { setMenu(0) }} className={menu === 0 ? 'is-active' : ''}>
-        <SvgSearch></SvgSearch>
+        <SvgSearch />
         <Span>Search</Span>
       </Div>
 
       <Div onClick={e => { setMenu(1) }} className={menu === 1 ? 'is-active' : ''}>
-        <SvgImageSearch></SvgImageSearch>
+        <SvgImageSearch />
         <Span>Image Search</Span>
       </Div>
 
       <Div onClick={e => setMenu(2)} className={menu === 2 ? 'is-active' : ''}>
-        <SvgKeywords></SvgKeywords>
+        <SvgKeywords />
         <Span>KeyWords</Span>
       </Div>
     </Container>

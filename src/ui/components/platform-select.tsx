@@ -31,7 +31,7 @@ function SelectPlatform({ setPlatform }) {
     <Details ref={detailRef}>
       <summary>
         <span>{filter}</span>
-        <SvgSortUp></SvgSortUp>
+        <SvgSortUp />
       </summary>
 
       <Ul>
@@ -39,21 +39,21 @@ function SelectPlatform({ setPlatform }) {
           className={filter === 'All' ? 'is-active' : ''} 
           onClick={e => { handleClick('All') }}
         >
-          <SvgCheck></SvgCheck>
+          <SvgCheck />
           <span>All</span>
         </Li>
         <Li 
           className={filter === 'Midjourney' ? 'is-active' : ''} 
           onClick={e => { handleClick('Midjourney') }}
         >
-          <SvgCheck></SvgCheck>
+          <SvgCheck />
           <span>Midjourney</span>
         </Li>
         <Li 
           className={filter === 'Stable Diffusion' ? 'is-active' : ''} 
           onClick={e => { handleClick('Stable Diffusion') }}
         >
-          <SvgCheck></SvgCheck>
+          <SvgCheck />
           <span>Stable Diffusion</span>
         </Li>
       </Ul>

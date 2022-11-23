@@ -11,9 +11,9 @@ function MenuInfo() {
     return (
       <Container>
         <Col_A_Center_Gap16>
-          <SvgBook></SvgBook>
+          <SvgBook />
           <Col_A_Center>
-            <SvgLogo></SvgLogo>
+            <SvgLogo />
             <Div>{version}</Div>
           </Col_A_Center>
         </Col_A_Center_Gap16>
@@ -26,13 +26,13 @@ function MenuInfo() {
 
         <Col_A_Center_Gap6>
           <Row_A_Center>
-            <SvgHeart></SvgHeart>
+            <SvgHeart />
             <Span>
               Add your favorite images and prompts to your collection.
             </Span>
           </Row_A_Center>
           <Row_A_Center>
-            <SvgPhoto></SvgPhoto>
+            <SvgPhoto />
             <Span>
               Generate your own image of your imagination.
             </Span>
@@ -44,7 +44,7 @@ function MenuInfo() {
             <A target="_blank" href="https://enterpix.app/">Visit Enterpix</A>
           </Button>
           <Button className="bg-white">
-            <SvgDiscord></SvgDiscord>
+            <SvgDiscord />
             <A target="_blank" href="https://discord.com/invite/bR4eHzpcvQ">Join Community</A>
           </Button>
         </Col_A_Center>

@@ -7,7 +7,7 @@ import SelectPlatform from './platform-select';
 import { ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
-import { SearchSimilar, createImgItem } from '../lib/utils';
+import { searchSimilar, createImgItem } from '../lib/utils';
 
 
 function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile }) {
@@ -19,10 +19,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [platform, setPlatform] = useState({  
-    midjourney: true,
-    stableDiffusion: true,
-  })
+  const [platform, setPlatform] = useState({  midjourney: true, stableDiffusion: true })
   const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
@@ -40,7 +37,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
     }
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, SearchSimilar, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, searchSimilar, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -57,7 +54,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
   const generateText2Img = async (prompt: string) => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
-    ClearResult()
+    clearResult()
     setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, platform);
     postRequest(json, false)
@@ -92,7 +89,7 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
     setIsLoading(false)
   }
 
-  const ClearResult = () => {
+  const clearResult = () => {
     imgCol1.current!.replaceChildren()
     imgCol2.current!.replaceChildren()
     setCanClear(false)
@@ -133,12 +130,12 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
         </SpanGradient>
 
         <SpanHover onClick={e => setMenu(3)}>
-          <SvgInfo></SvgInfo>
+          <SvgInfo />
         </SpanHover>
       </Row_Center>
 
       <FlexEnd>
-        <span onClick={e => canClear ? ClearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+        <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
           Clear
         </span>
         <span className="select-platform">

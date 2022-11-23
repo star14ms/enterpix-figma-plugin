@@ -21,7 +21,7 @@ export function isFileImage(file: File) {
 }
 
 
-export async function SearchSimilar(id: string, setFile: Function, setMenu: Function) {
+export async function searchSimilar(id: string, setFile: Function, setMenu: Function) {
   const canvas = document.createElement('canvas') as HTMLCanvasElement;
   const image = document.getElementById(id) as HTMLImageElement;
   const ctx = canvas.getContext("2d");
@@ -58,7 +58,7 @@ export async function SearchSimilar(id: string, setFile: Function, setMenu: Func
 
 
 export function createImgItem(
-  image: ImageData, getImg: Function, SearchSimilar: Function, 
+  image: ImageData, getImg: Function, searchSimilar: Function, 
   setFile: React.Dispatch<React.SetStateAction<number>>,
   setMenu?: React.Dispatch<React.SetStateAction<number>>,
 ) {
@@ -75,7 +75,7 @@ export function createImgItem(
   const button = document.createElement('button');
   button.innerHTML = 'Search Similar Style'
   button.addEventListener('click', async () => {
-    await SearchSimilar(image.id, setFile, setMenu)
+    await searchSimilar(image.id, setFile, setMenu)
   })
   
   button.innerHTML = button.innerHTML + 

@@ -54,7 +54,7 @@ function DragDropForm({ file, setFile, platform, generateImg2Img }) {
     await generateImg2Img(file)
   }
 
-  function Clear() {
+  function clear() {
     setFileUploaded(false)
     dropArea.current!.classList.remove('uploaded')
     setFile(null)
@@ -85,15 +85,15 @@ function DragDropForm({ file, setFile, platform, generateImg2Img }) {
       <Form>
         {!fileUploaded ? 
           <PadTop>
-            <SvgUpload></SvgUpload>
+            <SvgUpload />
             <Col_CenterGap0>
               <P>Drag and drop your image here or</P>
               <P><Blue>Browse</Blue> to choose a file.</P>
             </Col_CenterGap0>
           </PadTop>
         :
-          <Button onClick={Clear}>
-            <SvgClear></SvgClear>
+          <Button onClick={clear}>
+            <SvgClear />
           </Button>
         }
         <input type="file" id="fileElem" accept="image/*" onChange={(e) => handleGenerateImg2Img(e.target.files)} />
