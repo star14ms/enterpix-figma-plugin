@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Container, Row, FlexEnd, ImgCol } from './styled'
+import { Container, ContainerCanHide, Row, FlexEnd, ImgCol, DivPadding } from './styled'
 import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
 import ImageDetail from './image-detail';
@@ -56,6 +56,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   const generateImg2Img = async (file: File) => {
     if (isLoading) return
     setIsLoading(true)
+    clearResult()
     setFile(file)
     const json = await getImg2Img(file, platform);
     postRequest(json, false)
@@ -77,8 +78,8 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   }
 
   const clearResult = () => {
-    imgCol1.current!.replaceChildren()
-    imgCol2.current!.replaceChildren()
+    imgCol1.current!?.replaceChildren()
+    imgCol2.current!?.replaceChildren()
     setCanClear(false)
   }
 
@@ -91,7 +92,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   return (
     <>
     <Container>
-      <Container className={selectedImage ? 'hidden' : ''}>
+      <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
         <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} platform={platform}></DragDropForm>
 
         {file && 
@@ -107,7 +108,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
           </FlexEnd>
           </>
         }
-      </Container>
+      </ContainerCanHide>
 
       {file && 
         <>
@@ -120,7 +121,9 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
         </>
       }
 
-      {isLoading ? 'Loading...' : ''}
+      {isLoading &&
+        <DivPadding>Loading...</DivPadding> 
+      }
 
       <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
     </Container>

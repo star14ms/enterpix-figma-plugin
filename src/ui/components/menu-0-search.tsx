@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS } from './styled'
+import { Container, ContainerCanHide, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS, DivPadding } from './styled'
 import { SvgInfo } from './svg'
 import SelectPlatform from './platform-select';
 import ImageDetail from './image-detail';
@@ -124,7 +124,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   return (
     <>
     <Container>
-      <Container className={selectedImage ? 'hidden' : ''}>
+      <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
         <Row_Center>
           <SpanGradient ref={gradientRef}>
             <Input 
@@ -150,7 +150,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
             <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
           </span>
         </FlexEnd>
-      </Container>
+      </ContainerCanHide>
 
       <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} setFile={setFile} setMenu={setMenu}/>
 
@@ -159,7 +159,9 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
         <ImgCol ref={imgCol2}></ImgCol>
       </Row>
 
-      {isLoading ? 'Loading...' : ''}
+      {isLoading &&
+        <DivPadding>Loading...</DivPadding> 
+      }
  
       <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
     </Container>

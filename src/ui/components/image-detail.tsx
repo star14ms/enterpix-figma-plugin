@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, ColCSS, Row_CenterCSS, HoverBackgroundCSS } from './styled'
+import { ContainerCanHide, ColCSS, Row_CenterCSS, HoverBackgroundCSS } from './styled'
 import { SvgSortRight, SvgArrow } from './svg'
 
 import { searchSimilar } from '../lib/utils';
@@ -9,7 +9,7 @@ import { searchSimilar } from '../lib/utils';
 function ImageDetail({ selectedImage, setSelectedImage, setFile, setMenu }) {
 
   return (
-    <Container className={selectedImage ? '' : 'hidden'}>
+    <ContainerCanHide className={selectedImage ? '' : 'hidden'}>
       <DivRelative>
         <SpanHover onClick={e => setSelectedImage('')}>
           <SvgArrow />
@@ -28,7 +28,7 @@ function ImageDetail({ selectedImage, setSelectedImage, setFile, setMenu }) {
       </ColFlexStart>
 
       <SpanBlack>Related Photo</SpanBlack>
-    </Container>
+    </ContainerCanHide>
   );
 }
 
@@ -41,10 +41,14 @@ const DivRelative = styled.div`
 
 const SpanHover = styled.span`
   position: absolute;
-  top: 6px;
-  left: 6px;
-  width: 24px;
-  height: 24px;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
 
   ${HoverBackgroundCSS}
 `

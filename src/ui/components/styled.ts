@@ -10,6 +10,16 @@ export const Container = styled.div`
   box-sizing: border-box;
   gap: 16px;
   color: #9CA3AF;
+`;
+
+export const ContainerCanHide = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 16px;
+  color: #9CA3AF;
 
   &.hidden {
     display: none;
@@ -178,3 +188,7 @@ export const ImgCol = styled.div`
     }
   }
 `;
+
+export const DivPadding = styled.div`
+  padding: 32px 0;
+`

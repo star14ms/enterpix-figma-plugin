@@ -113,7 +113,7 @@ const Container = styled.div`
   
   border: 2px dashed #ccc;
   width: 364px;
-  height: 100%;
+  height: 526px;
   margin: 0 auto;
   
   &.highlight, &:hover {
