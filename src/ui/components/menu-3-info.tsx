@@ -98,8 +98,6 @@ const Row_Center_Gap48 = styled.div`
 
   a {
     ${HoverOpacityCSS}
-    font-family: 'Pretendard';
-    font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
@@ -111,8 +109,6 @@ const Row_Center_Gap48 = styled.div`
 `
 
 const Div = styled.div`
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 32px;
@@ -157,8 +153,6 @@ const Button = styled.button`
 
 const P = styled.p`
   margin: 0;
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
@@ -169,8 +163,6 @@ const P = styled.p`
 `
 
 const Span = styled.span`
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;

@@ -85,8 +85,6 @@ export const FlexEnd = styled.div`
   width: calc(400px - 16px*2);
   gap: 12px;
 
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -152,8 +150,6 @@ export const ImgCol = styled.div`
       border-radius: 8px;
       transition: 0.15s;
 
-      font-family: 'Pretendard';
-      font-style: normal;
       font-weight: 500;
       font-size: 10px;
       line-height: 10px;

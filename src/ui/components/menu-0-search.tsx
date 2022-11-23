@@ -187,6 +187,19 @@ const Input = styled.input`
   padding: 0 15px;
   outline: none;
   border: 0;
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #9CA3AF;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #9CA3AF;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #9CA3AF;
+  }
 `
 
 

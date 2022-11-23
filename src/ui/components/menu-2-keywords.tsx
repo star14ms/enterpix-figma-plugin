@@ -107,8 +107,6 @@ const Gradient = styled.div`
 
 
 const Span = styled.span`
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;

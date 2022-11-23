@@ -169,8 +169,7 @@ const Col_CenterGap0 = styled.div`
 
 
 const P = styled.p`
-  font-family: 'Pretendard';
-  font-style: normal;
+  color: #000000;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;

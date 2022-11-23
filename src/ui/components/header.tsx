@@ -82,15 +82,6 @@ const Div = styled.div`
   padding: 6px;
   gap: 4px;
   
-  
-  /* Inside auto layout */
-  
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  
-  
-  /* Custom */
   border-radius: 1rem;
   color: #9CA3AF;
   transition: 0.15s;
@@ -107,32 +98,15 @@ const Div = styled.div`
 const Span = styled.span`
   height: 11px;
   
-  font-family: 'Pretendard';
-  font-style: normal;
   font-weight: 600;
   font-size: 11px;
   line-height: 11px;
-  /* identical to box height, or 100% */
-  
-  
-  /* Inside auto layout */
-  
-  flex: none;
-  order: 1;
-  flex-grow: 0;
 `
 
 
 const Svg = styled.svg`
   width: 16px;
   height: 16px;
-  
-  
-  /* Inside auto layout */
-  
-  flex: none;
-  order: 0;
-  flex-grow: 0;
 `
 
 

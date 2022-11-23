@@ -126,6 +126,7 @@ const Ul = styled.ul`
 
 const Li = styled.li`
   display: flex;
+  align-items: center;
   height: 20px;
 
   padding: 2px;
