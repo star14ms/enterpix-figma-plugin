@@ -32,7 +32,7 @@ export async function requestText2Img({ prompt, start, length, platform }: Text2
     })
   }
   const response = await fetch(apiUrlText2Img, options)
-  const json = await response.json()
+  const json = await response.json() as ResponseJson
 
   if (response.status !== 200) requestErrorToPlugin(json)
   return json
@@ -58,7 +58,7 @@ export async function requestImg2Img({ image, start, length, platform }: Img2Img
     body: formData,
   }
   const response = await fetch(apiUrlImg2Img, options);
-  const json = await response.json()
+  const json = await response.json() as ResponseJson
 
   if (response.status !== 200) requestErrorToPlugin(json)
   return json

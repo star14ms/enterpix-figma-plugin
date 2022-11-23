@@ -1,4 +1,4 @@
-import { PluginMessagePayload, Quote } from '../../shared';
+import { PluginMessagePayload } from '../../shared';
 import { ResponseJson } from '../../shared/api';
 
 export function requestToPlugin<T>(payload: T) {

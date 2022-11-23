@@ -29,14 +29,15 @@ function MenuSearch({ prompt, setPrompt, isScrollBottom, menu, setMenu, setFile 
   const [canClear, setCanClear] = useState(false);
 
   const showImages = (images: ImageData[], add: boolean = false) => {
+    let col1H: number, col2H: number
+
     if (!add) {
       setCol1Height(0)
       setCol2Height(0)
+      col1H = 0, col2H = 0
+    } else {
+      col1H = col1Height, col2H = col2Height
     }
-
-    // console.log(col1Height, col2Height)
-
-    let col1H = col1Height, col2H = col2Height
 
     for (const image of images) {
       const imageItem = createImgItem(image, getImg, SearchSimilar, setFile, setMenu)

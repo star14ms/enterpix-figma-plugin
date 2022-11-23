@@ -1,11 +1,6 @@
 import { ResponseJson } from "./api";
 
 
-export type Quote = {
-  author: string | null;
-  text: string;
-};
-
 export type PluginAction =  'generateImage' | 'error';
 
 export type generateImagePayload = {
