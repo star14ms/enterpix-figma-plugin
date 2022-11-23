@@ -160,7 +160,7 @@ const P = styled.p`
   margin: 0;
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   line-height: 21px;
   

@@ -8,7 +8,7 @@ import { ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
 import useScroll from '../hooks/useScroll';
-import { img2File, createImgItem } from '../lib/utils';
+import { SearchSimilar, createImgItem } from '../lib/utils';
 
 
 function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
@@ -42,7 +42,7 @@ function MenuSearch({ setMenu, prompt, setPrompt, setFile }) {
     let col1H = col1Height, col2H = col2Height
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, img2File, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, SearchSimilar, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -161,6 +161,7 @@ const Input = styled.input`
   height: 32px;
   background: #F3F4F6;
   border-radius: 1.5rem;
+  font-size: 18px;
   padding: 0 15px;
   outline: none;
   border: 0;

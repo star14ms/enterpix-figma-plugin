@@ -6,7 +6,7 @@ import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
 import useScroll from '../hooks/useScroll';
 
-import { img2File, createImgItem } from '../lib/utils';
+import { SearchSimilar, createImgItem } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, setMenu }){
@@ -38,7 +38,7 @@ function MenuImageSearch({ file, setFile, setMenu }){
     let col1H = col1Height, col2H = col2Height
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, img2File, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, SearchSimilar, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -82,12 +82,16 @@ function MenuImageSearch({ file, setFile, setMenu }){
 
   return (
     <Container>
-      <DragDropForm generateImg2Img={generateImg2Img} file={file}></DragDropForm>
+      <DragDropForm generateImg2Img={generateImg2Img} file={file} setFile={setFile}></DragDropForm>
 
-      <Row>
-        <ImgCol ref={imgCol1}></ImgCol>
-        <ImgCol ref={imgCol2}></ImgCol>
-      </Row>
+      {file && 
+        <>
+        <Row>
+          <ImgCol ref={imgCol1}></ImgCol>
+          <ImgCol ref={imgCol2}></ImgCol>
+        </Row>
+        </>
+      }
 
       {isLoading ? 'Loading...' : ''}
     </Container>

@@ -98,6 +98,27 @@ export const SvgArrow = () => {
 }
 
 
+export const SvgUpload = () => {
+  return (
+    <svg width="80" height="81" viewBox="0 0 80 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect y="0.5" width="80" height="80" rx="40" fill="#E2E5FF"/>
+      <rect x="24" y="24.5" width="32" height="32" rx="16" fill="#6D7DFD"/>
+      <path d="M40 32.5V48.5M48 40.5L32 40.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+
+export const SvgClear = () => {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="24" height="24" rx="12" fill="#D1D5DB"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M7.43432 7.43431C7.74673 7.12189 8.25327 7.12189 8.56569 7.43431L12 10.8686L15.4343 7.43431C15.7467 7.12189 16.2533 7.12189 16.5657 7.43431C16.8781 7.74673 16.8781 8.25326 16.5657 8.56568L13.1314 12L16.5657 15.4343C16.8781 15.7467 16.8781 16.2533 16.5657 16.5657C16.2533 16.8781 15.7467 16.8781 15.4343 16.5657L12 13.1314L8.56569 16.5657C8.25327 16.8781 7.74673 16.8781 7.43432 16.5657C7.1219 16.2533 7.1219 15.7467 7.43432 15.4343L10.8686 12L7.43432 8.56568C7.1219 8.25326 7.1219 7.74673 7.43432 7.43431Z" fill="white"/>
+    </svg>
+  )
+}
+
+
 const Button = styled.button`
   background-color: #FFFFFF;
   

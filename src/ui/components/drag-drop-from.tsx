@@ -1,9 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
+import { Col_Center, Col_CenterCSS, HoverCSS } from './styled';
+import { SvgUpload, SvgClear } from './svg';
+
 import { isFileImage } from '../lib/utils'
   
 
-function DragDropForm({ generateImg2Img, file }) {
+function DragDropForm({ generateImg2Img, file, setFile }) {
   const dropArea = useRef(null);
   const labelArea = useRef(null);
 
@@ -51,6 +54,13 @@ function DragDropForm({ generateImg2Img, file }) {
     await generateImg2Img(file)
   }
 
+  function Clear() {
+    setFileUploaded(false)
+    dropArea.current!.classList.remove('uploaded')
+    setFile(null)
+    document.getElementById('gallery').replaceChildren()
+  }
+
   useEffect(() => {
     if (file) {
       const dataTranster = new DataTransfer();
@@ -66,19 +76,29 @@ function DragDropForm({ generateImg2Img, file }) {
   return (
     <Container 
       ref={dropArea}
-      onDragOver={(e) => highlight(e)}
-      onDrop={(e) => handleDrop(e)}
-      onDragEnter={(e) => highlight(e)}
-      onDragLeave={(e) => unhighlight(e)}
-      onClick={(e) => labelArea.current!.click()}
+      onDragOver={e => highlight(e)}
+      onDrop={e => handleDrop(e)}
+      onDragEnter={e => highlight(e)}
+      onDragLeave={e => unhighlight(e)}
+      onClick={e => !fileUploaded ? labelArea.current!.click() : {}}
     >
-      <form className="my-form">
-        {!fileUploaded && <>
-          <p>Upload an image</p>
-        </>}
+      <Form>
+        {!fileUploaded ? 
+          <PadTop>
+            <SvgUpload></SvgUpload>
+            <Col_CenterGap0>
+              <P>Drag and drop your image here or</P>
+              <P><Blue>Browse</Blue> to choose a file.</P>
+            </Col_CenterGap0>
+          </PadTop>
+        :
+          <Button onClick={Clear}>
+            <SvgClear></SvgClear>
+          </Button>
+        }
         <input type="file" id="fileElem" accept="image/*" onChange={(e) => handleGenerateImg2Img(e.target.files)} />
         <label ref={labelArea} className="button" htmlFor="fileElem"></label>
-      </form>
+      </Form>
       <div id="gallery"></div>
     </Container>
   );
@@ -92,11 +112,9 @@ const Container = styled.div`
   align-items: center;
   
   border: 2px dashed #ccc;
-  border-radius: 20px;
-  width: 340px;
+  width: 364px;
   height: 100%;
   margin: 0 auto;
-  padding: 20px;
   
   &.highlight, &:hover {
     border-color: #6D7DFD;
@@ -104,32 +122,15 @@ const Container = styled.div`
   }
   
   &.uploaded {
+    border: 2px solid #6D7DFD;
+    width: auto;
     height: 100px;
-  }
-  
-  a {
-    color: #369;
-  }
-  
-  p {
-    font-size: 24px;
-    margin: 0;
-  }
-  
-  .my-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0;
-  }
-  
-  #gallery {
-    margin-top: 10px;
   }
   
   #gallery img {
     height: 100px;
     vertical-align: middle;
+    box-shadow: 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 4px #3B82F6;
   }
   
   .button {
@@ -143,6 +144,53 @@ const Container = styled.div`
   
   #fileElem {
     display: none;
+  }
+`
+
+
+const Form = styled.form`
+  ${Col_CenterCSS}
+  position: relative;
+  margin-bottom: 0;
+  gap: 24px;
+`
+
+
+const PadTop = styled.div`
+  ${Col_CenterCSS}
+  padding: 48px 0px 0px;
+`
+
+
+const Col_CenterGap0 = styled.div`
+  ${Col_CenterCSS}
+  gap: 0px;
+`
+
+
+const P = styled.p`
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+`
+
+
+const Blue = styled.span`
+  color: #6D7DFD;
+`
+
+
+const Button = styled.span`
+  position: absolute;
+  top: -12px;
+  right: -12px;
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(85%);
   }
 `
 
