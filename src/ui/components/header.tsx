@@ -53,7 +53,7 @@ function Header({ menu, setMenu }) {
 
       <Div onClick={e => setMenu(2)} className={menu === 2 ? 'is-active' : ''}>
         <SvgKeywords />
-        <Span>KeyWords</Span>
+        <Span>Keywords</Span>
       </Div>
     </Container>
   )
@@ -98,7 +98,7 @@ const Div = styled.div`
 const Span = styled.span`
   height: 11px;
   
-  font-weight: 600;
+  font-weight: 500;
   font-size: 11px;
   line-height: 11px;
 `

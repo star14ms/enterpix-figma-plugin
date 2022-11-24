@@ -98,6 +98,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
 
   const clearInput = () => {
     inputTextRef.current!.value = ''
+    gradientRef.current!.classList.remove('is-active')
     gradientRef.current!.classList.remove('is-finish')
   }
 
@@ -141,7 +142,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
             </Input>
 
             <SpanClear 
-              className={inputTextRef.current!?.value === '' ? 'hidden' : ''} 
+              className='clear' 
               onClick={clearInput}
             >
               <SvgTimes />
@@ -207,6 +208,12 @@ const SpanGradient = styled.span`
     input {
       background: #FFFFFF;
     }
+
+    &:not(.is-active, &.is-finish) {
+      .clear {
+        display: none;
+      }
+    }
   }
 `
 
@@ -222,10 +229,6 @@ const SpanClear = styled.span`
   width: 20px;
   height: 20px;
   border-radius: 8px;
-
-  &.hidden {
-    display: none;
-  }
 
   &:hover {
     background-color: rgb(220, 220, 220);
@@ -248,7 +251,7 @@ const Input = styled.input`
   width: 336px;
   height: 32px;
   border-radius: 1.5rem;
-  font-size: 18px;
+  font-size: 12px;
   padding: 0 15px;
   outline: none;
   border: 0;
