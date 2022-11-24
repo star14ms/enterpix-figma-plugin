@@ -166,7 +166,6 @@ export const ImgCol = styled.div`
       padding: 6px 6px 6px 10px;
       gap: 2px;
 
-      background: #FFFFFF;
       border: 1px solid #E5E7EB;
       border-radius: 8px;
       transition: 0.15s;
@@ -176,11 +175,7 @@ export const ImgCol = styled.div`
       line-height: 10px;
       color: #6B7280;
 
-      &:hover {
-        transition: 0.15s;
-        background-color: rgb(220, 220, 220);
-        cursor: pointer;
-      }
+      ${HoverBackgroundCSS}
     }
     
     &:hover button {

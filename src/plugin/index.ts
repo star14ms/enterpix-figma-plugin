@@ -49,6 +49,7 @@ async function generateImage({ array, width, height }: generateImagePayload) {
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
     ];
     figma.currentPage.appendChild(rectanglenode);
+    figma.currentPage.selection = [rectanglenode]
   }
 }
 

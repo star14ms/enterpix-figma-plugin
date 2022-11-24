@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container, ContainerCanHide, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS, DivPadding } from './styled'
-import { SvgInfo } from './svg'
+import { Container, ContainerCanHide, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS, DivPadding, HoverBackgroundCSS, HoverBrightnessCSS } from './styled'
+import { SvgInfo, SvgTimes } from './svg'
 import SelectPlatform from './platform-select';
 import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
@@ -58,6 +58,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
 
   const generateText2Img = async (prompt: string) => {
     if (isLoading || prompt.trim().length === 0) return
+    gradientRef.current!.classList.add('is-finish')
     setIsLoading(true)
     clearResult()
     setPrompt(inputTextRef.current!.value)
@@ -80,6 +81,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   }
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    gradientRef.current!.classList.remove('is-finish')
     if (e.currentTarget.value === '') {
       gradientRef.current!.classList.remove('is-active')
     } else {
@@ -94,6 +96,11 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     setIsLoading(false)
   }
 
+  const clearInput = () => {
+    inputTextRef.current!.value = ''
+    gradientRef.current!.classList.remove('is-finish')
+  }
+
   const clearResult = () => {
     imgCol1.current!.replaceChildren()
     imgCol2.current!.replaceChildren()
@@ -103,14 +110,12 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   useEffect(() => {
     if (prompt) {
       inputTextRef.current!.value = prompt
-      gradientRef.current!.classList.add('is-active')
       generateText2Img(prompt)
     }
   }, [prompt])
 
   useEffect(() => {
-    if (inputTextRef.current!.value) {
-      gradientRef.current!.classList.add('is-active')
+    if (prompt) {
       generateText2Img(prompt)
     }
   }, [platform])
@@ -134,6 +139,13 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
               defaultValue={prompt}
             >
             </Input>
+
+            <SpanClear 
+              className={inputTextRef.current!?.value === '' ? 'hidden' : ''} 
+              onClick={clearInput}
+            >
+              <SvgTimes />
+            </SpanClear>
           </SpanGradient>
   
           <SpanHover onClick={e => setMenu(3)}>
@@ -171,16 +183,58 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
 
 
 const SpanGradient = styled.span`
+  position: relative;
   width: 336px;
   height: 32px;
   border-radius: 1.5rem;
   border: 3px solid transparent;
-  
-  &.is-active {
+
+  input {
+    background: #F3F4F6;
+  }
+
+  &.is-active:not(.is-finish) {
     background-image: linear-gradient(#fff, #fff), linear-gradient(to bottom, #408FFF 0%, #FF007A 100%);
     background-origin: border-box;
     background-clip: content-box, border-box;
     border-image-slice: 1;
+  }
+
+  &.is-finish {
+    border: 2px solid #E5E7EB;
+    margin: 1px;
+
+    input {
+      background: #FFFFFF;
+    }
+  }
+`
+
+
+const SpanClear = styled.span`
+  position: absolute;
+  top: 6px;
+  right: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 8px;
+
+  &.hidden {
+    display: none;
+  }
+
+  &:hover {
+    background-color: rgb(220, 220, 220);
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: rgb(200, 200, 200);
+    cursor: pointer;
   }
 `
 
@@ -193,7 +247,6 @@ const SpanHover = styled.span`
 const Input = styled.input`
   width: 336px;
   height: 32px;
-  background: #F3F4F6;
   border-radius: 1.5rem;
   font-size: 18px;
   padding: 0 15px;
