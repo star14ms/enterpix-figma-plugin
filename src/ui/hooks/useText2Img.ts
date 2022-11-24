@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PlatformParams } from '../../shared/api';
+import { PlatformFilter } from '../../shared/api';
 import { requestText2Img } from '../api';
 import { makePlatformAPIArg } from '../lib/utils';
 
@@ -9,8 +9,8 @@ function useText2Img() {
   const [start, setStart] = useState(startInit);
   const length = 20
 
-  const getText2Img = async (prompt: string, platformParmas: PlatformParams) => {
-    const platform = makePlatformAPIArg(platformParmas)
+  const getText2Img = async (prompt: string, filter: PlatformFilter) => {
+    const platform = makePlatformAPIArg(filter)
     const json = await requestText2Img({ prompt, start, length, platform });
 
     setStart(start => (start + length) % 1000)

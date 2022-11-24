@@ -6,7 +6,7 @@ import ImageDetail from './image-detail';
 import useScroll from '../hooks/useScroll';
 import ButtonScrollTop from './btn-scroll-top';
 
-import { ImageData, ResponseJson } from '../../shared/api'
+import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
 import { searchSimilar, createImgItem } from '../lib/utils';
@@ -20,7 +20,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [platform, setPlatform] = useState({  midjourney: true, stableDiffusion: true })
+  const [filter, setFilter] = useState<PlatformFilter>('All');
   const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
@@ -58,7 +58,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     setIsLoading(true)
     clearResult()
     setFile(file)
-    const json = await getImg2Img(file, platform);
+    const json = await getImg2Img(file, filter);
     postRequest(json, false)
     setCanClear(true)
   }
@@ -66,7 +66,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   const generateImg2ImgAdd = async () => {
     if (isLoading) return
     setIsLoading(true)
-    const json = await getImg2Img(file, platform);
+    const json = await getImg2Img(file, filter);
     postRequest(json, true)
   }
 
@@ -93,17 +93,17 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     <>
     <Container>
       <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
-        <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} platform={platform}></DragDropForm>
+        <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} filter={filter}></DragDropForm>
 
         {file && 
           <>
           <FlexEnd>
-            <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+            <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
               Clear
             </span>
             <span className="select-platform">
               <span>Filter by</span>
-              <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
+              <SelectPlatform filter={filter} setFilter={setFilter}></SelectPlatform>
             </span>
           </FlexEnd>
           </>

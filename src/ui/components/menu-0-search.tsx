@@ -7,7 +7,7 @@ import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
 import useScroll from '../hooks/useScroll';
 
-import { ImageData, ResponseJson } from '../../shared/api'
+import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
 import { searchSimilar, createImgItem } from '../lib/utils';
@@ -23,7 +23,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [platform, setPlatform] = useState({  midjourney: true, stableDiffusion: true })
+  const [filter, setFilter] = useState<PlatformFilter>('All');
   const [isLoading, setIsLoading] = useState(false);
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
@@ -62,7 +62,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     setIsLoading(true)
     clearResult()
     setPrompt(inputTextRef.current!.value)
-    const json = await getText2Img(prompt, platform);
+    const json = await getText2Img(prompt, filter);
     postRequest(json, false)
     setCanClear(true)
   };
@@ -70,7 +70,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const generateText2ImgAdd = async () => {
     if (isLoading || prompt.trim().length === 0) return
     setIsLoading(true)
-    const json = await getText2Img(prompt, platform);
+    const json = await getText2Img(prompt, filter);
     postRequest(json, true)
   };
 
@@ -119,7 +119,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     if (prompt) {
       generateText2Img(prompt)
     }
-  }, [platform])
+  }, [filter])
 
   useEffect(() => {
     if (menu === 0 || isScrollBottom) {
@@ -155,12 +155,12 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
         </Row_Center>
   
         <FlexEnd>
-          <span onClick={e => canClear ? clearResult() : {}} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+          <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
             Clear
           </span>
           <span className="select-platform">
             <span>Filter by</span>
-            <SelectPlatform setPlatform={setPlatform}></SelectPlatform>
+            <SelectPlatform filter={filter} setFilter={setFilter}></SelectPlatform>
           </span>
         </FlexEnd>
       </ContainerCanHide>

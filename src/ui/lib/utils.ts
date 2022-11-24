@@ -1,17 +1,22 @@
 import { requestgenerateImageToPlugin } from './figma'
-import { PlatformParams } from '../../shared/api'
+import { PlatformFilter } from '../../shared/api'
 import { ImageData } from '../../shared/api'
 
 
-export function makePlatformAPIArg(platformParmas: PlatformParams) {
+export function makePlatformAPIArg(filter: PlatformFilter) {
   let platform = ''
 
-  if (platformParmas.midjourney) {
-    platform = platform + 'midjourney,'
-  } 
-  if (platformParmas.stableDiffusion)  {
-    platform = platform + 'stable-diffusion,'
+  switch (filter) {
+    case 'All':
+      platform = platform + 'midjourney,stable-diffusion'
+      break;
+    case 'Midjourney':
+      platform = platform + 'midjourney'
+      break;
+    case 'Stable Diffusion':
+      platform = platform + 'stable-diffusion'
   }
+
   return platform
 }
 

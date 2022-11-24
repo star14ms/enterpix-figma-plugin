@@ -4,25 +4,10 @@ import { HoverBackgroundCSS } from './styled'
 import { SvgSortUp, SvgCheck } from './svg'
 
 
-function SelectPlatform({ setPlatform }) {
-  const [filter, setFilter] = useState('All');
+function SelectPlatform({ filter, setFilter }) {
   const detailRef = useRef(null);
 
   const handleClick = (choice: string) => {
-    let newPlatform: object
-
-    switch (choice) {
-      case 'All':
-        newPlatform = { midjourney: true, stableDiffusion: true}
-        break;
-      case 'Midjourney':
-        newPlatform = { midjourney: true, stableDiffusion: false}
-        break;
-      case 'Stable Diffusion':
-        newPlatform = { midjourney: false, stableDiffusion: true}
-    }
-
-    setPlatform(newPlatform)
     setFilter(choice)
     detailRef.current!.removeAttribute("open");
   }

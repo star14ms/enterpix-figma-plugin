@@ -6,7 +6,7 @@ import { SvgUpload, SvgClear } from './svg';
 import { isFileImage } from '../lib/utils'
   
 
-function DragDropForm({ file, setFile, platform, generateImg2Img }) {
+function DragDropForm({ file, setFile, filter, generateImg2Img }) {
   const dropArea = useRef(null);
   const labelArea = useRef(null);
 
@@ -71,7 +71,7 @@ function DragDropForm({ file, setFile, platform, generateImg2Img }) {
 
       handleGenerateImg2Img(input.files)
     }
-  }, [file, platform])
+  }, [file, filter])
 
   return (
     <Container 

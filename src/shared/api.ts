@@ -13,10 +13,7 @@ export type Img2ImgParams = {
     platform?: string,
 }
 
-export type PlatformParams = {
-    midjourney: boolean,
-    stableDiffusion: boolean,
-}
+export type PlatformFilter = 'All' | 'Midjourney' | 'Stable Diffusion'
 
 export type ImageData = {
     id: string,
