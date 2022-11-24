@@ -45,6 +45,8 @@ async function generateImage({ array, width, height }: generateImagePayload) {
       height = 500
     }
     rectanglenode.resize(width, height);
+    rectanglenode.x = figma.viewport.center.x
+    rectanglenode.y = figma.viewport.center.y
     rectanglenode.fills = [
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
     ];
