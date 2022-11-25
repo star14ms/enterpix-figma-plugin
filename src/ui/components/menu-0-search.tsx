@@ -1,22 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Container, ContainerCanHide, Row, Row_Center, FlexEnd, ImgCol, HoverOpacityCSS, DivPadding, HoverBackgroundCSS, HoverBrightnessCSS } from './styled'
+import { Container, ContainerCanHide, Row, Row_CenterCSS, FlexEnd, ImgCol, HoverOpacityCSS, DivPadding, HoverBackgroundCSS, HoverBrightnessCSS } from './styled'
 import { SvgInfo, SvgTimes } from './svg'
 import SelectPlatform from './platform-select';
 import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
-import useScroll from '../hooks/useScroll';
 
 import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
 import { searchSimilar, createImgItem } from '../lib/utils';
+import useScroll from '../hooks/useScroll';
 
 
 function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const getImg = useGetImg();
   const getText2Img = useText2Img();
-  const { isScrollTop, isScrollBottom } = useScroll();
+  const { scrollY, isScrollTop, isScrollBottom } = useScroll();
   
   const gradientRef = useRef(null);
   const inputTextRef = useRef(null);
@@ -130,7 +130,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     <>
     <Container>
       <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
-        <Row_Center>
+        <Row_Center_CanFixed className={scrollY >= 40 ? 'fixed' : ''}>
           <SpanGradient ref={gradientRef}>
             <Input 
               ref={inputTextRef} type='text' placeholder='Search images...'
@@ -151,9 +151,9 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
           <SpanHover onClick={e => setMenu(3)}>
             <SvgInfo />
           </SpanHover>
-        </Row_Center>
+        </Row_Center_CanFixed>
   
-        <FlexEnd>
+        <FlexEnd className={scrollY >= 40 ? 'margin-top' : ''}>
           <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
             Clear
           </span>
@@ -182,9 +182,22 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
 }
 
 
+const Row_Center_CanFixed = styled.div`
+  ${Row_CenterCSS}
+
+  &.fixed {
+    position: fixed;
+    top: 0;
+    padding: 16px 0;
+    z-index: 1;
+    background-color: #FFFFFF;
+  }
+`
+
+
 const SpanGradient = styled.span`
   position: relative;
-  width: 336px;
+  width: 330px;
   height: 32px;
   border-radius: 1.5rem;
   border: 3px solid transparent;
@@ -247,7 +260,7 @@ const SpanHover = styled.span`
 
 
 const Input = styled.input`
-  width: 336px;
+  width: 330px;
   height: 32px;
   border-radius: 1.5rem;
   font-size: 12px;

@@ -124,6 +124,10 @@ export const FlexEnd = styled.div`
       color: #D1D5DB;
     }
   }
+
+  &.margin-top {
+    margin-top: 64px;
+  }
   
   span.select-platform {
     display: flex;

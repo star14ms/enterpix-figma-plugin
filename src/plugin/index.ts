@@ -46,8 +46,9 @@ async function generateImage({ array, width, height }: generateImagePayload) {
       height = 500
     }
     newNode.resize(width, height);
-    newNode.x = figma.viewport.center.x
-    newNode.y = figma.viewport.center.y
+    const bounds = figma.viewport.bounds
+    newNode.x = bounds.x + bounds.width / 2 - width / 2
+    newNode.y = bounds.y + bounds.height / 2 - height / 2
     newNode.fills = [
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
     ];
