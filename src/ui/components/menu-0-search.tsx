@@ -65,7 +65,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, filter);
     postRequest(json, false)
-    setCanClear(true)
+    if (filter !== 'All') setCanClear(true)
   };
 
   const generateText2ImgAdd = async () => {

@@ -161,7 +161,7 @@ export const ImgCol = styled.div`
       align-items: center;
       visibility: hidden;
 
-      width: 121px;
+      width: 125px;
       height: 24px;
       padding: 6px 6px 6px 10px;
       gap: 2px;
