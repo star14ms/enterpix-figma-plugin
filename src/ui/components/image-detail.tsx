@@ -23,8 +23,8 @@ function ImageDetail({ selectedImage, setSelectedImage, setFile, setMenu }) {
       </Row_Center>
 
       <ColFlexStart>
-        <SpanGray>Prompt</SpanGray>
-
+        <span className="title">Prompt</span>
+        <span>{ selectedImage.prompt }</span>
       </ColFlexStart>
 
       <SpanBlack>Related Photo</SpanBlack>
@@ -76,16 +76,19 @@ const Span = styled.span`
 
 const ColFlexStart = styled.div`
   ${ColCSS}
-  align-items: flex-start
-`
-
-
-const SpanGray = styled.span`
+  align-items: flex-start;
   font-weight: 500;
-  font-size: 10px;
-  line-height: 10px;
-  
-  color: #6B7280;
+  font-size: 12px;
+  line-height: 16px;
+
+  color: #000000;
+
+  .title {
+    font-size: 10px;
+    line-height: 10px;
+    
+    color: #6B7280;
+  }
 `
 
 

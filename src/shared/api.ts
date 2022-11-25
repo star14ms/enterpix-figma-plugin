@@ -22,6 +22,7 @@ export type ImageData = {
     thumbnailUrl: string,
     width: number,
     height: number,
+    prompt: string,
 };
 
 export type ResponseJson = {
