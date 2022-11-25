@@ -56,6 +56,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   const generateImg2Img = async (file: File) => {
     if (isLoading) return
     setIsLoading(true)
+    setSelectedImage('')
     clearResult()
     setFile(file)
     const json = await getImg2Img(file, filter);

@@ -75,8 +75,12 @@ export function createImgItem(
   img.addEventListener('click', async () => {
     const array = await getImg(image.compressedUrl);
     requestgenerateImageToPlugin(array, image.width, image.height)
-    window.scrollTo({ top: 0 })
-    setSelectedImage(image)
+    setSelectedImage(value => {
+      if (value === '') {
+        window.scrollTo({ top: 0 })
+      }
+      return image 
+    })
   });
 
   const button = document.createElement('button');

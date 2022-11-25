@@ -57,9 +57,10 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   }
 
   const generateText2Img = async (prompt: string) => {
-    if (isLoading || prompt.trim().length === 0) return
+    if (isLoading) return
     gradientRef.current!.classList.add('is-finish')
     setIsLoading(true)
+    setSelectedImage('')
     clearResult()
     setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, filter);
@@ -68,7 +69,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   };
 
   const generateText2ImgAdd = async () => {
-    if (isLoading || prompt.trim().length === 0) return
+    if (isLoading) return
     setIsLoading(true)
     const json = await getText2Img(prompt, filter);
     postRequest(json, true)
@@ -116,9 +117,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   }, [prompt])
 
   useEffect(() => {
-    if (prompt) {
-      generateText2Img(prompt)
-    }
+    generateText2Img(prompt)
   }, [filter])
 
   useEffect(() => {

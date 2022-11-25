@@ -35,23 +35,24 @@ async function generateImage({ array, width, height }: generateImagePayload) {
   const currentSelectionNode = figma.currentPage.selection[0];
 
   if (currentSelectionNode?.type === 'RECTANGLE') {
+    currentSelectionNode.resize(width, height);
     currentSelectionNode.fills = [
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
     ];
   } else {
-    const rectanglenode = figma.createRectangle();
+    const newNode = figma.createRectangle();
     if (!width || !height) {
       width = 500
       height = 500
     }
-    rectanglenode.resize(width, height);
-    rectanglenode.x = figma.viewport.center.x
-    rectanglenode.y = figma.viewport.center.y
-    rectanglenode.fills = [
+    newNode.resize(width, height);
+    newNode.x = figma.viewport.center.x
+    newNode.y = figma.viewport.center.y
+    newNode.fills = [
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
     ];
-    figma.currentPage.appendChild(rectanglenode);
-    figma.currentPage.selection = [rectanglenode]
+    figma.currentPage.appendChild(newNode);
+    figma.currentPage.selection = [newNode]
   }
 }
 
