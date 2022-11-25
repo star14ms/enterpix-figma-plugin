@@ -58,7 +58,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
 
   const generateText2Img = async (prompt: string) => {
     if (isLoading) return
-    gradientRef.current!.classList.add('is-finish')
+    if (prompt !== '') gradientRef.current!.classList.add('is-finish')
     setIsLoading(true)
     setSelectedImage('')
     clearResult()
@@ -121,7 +121,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   }, [filter])
 
   useEffect(() => {
-    if (menu === 0 || isScrollBottom) {
+    if (menu === 0 && !isScrollTop && isScrollBottom) {
       generateText2ImgAdd()
     }
   }, [isScrollBottom])
@@ -207,11 +207,11 @@ const SpanGradient = styled.span`
     input {
       background: #FFFFFF;
     }
+  }
 
-    &:not(.is-active, &.is-finish) {
-      .clear {
-        display: none;
-      }
+  &:not(.is-active, .is-finish) {
+    .clear {
+      display: none;
     }
   }
 `
