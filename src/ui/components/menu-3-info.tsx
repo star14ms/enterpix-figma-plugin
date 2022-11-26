@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { SvgBook, SvgLogo, SvgHeart, SvgPhoto, SvgDiscord } from './svg'
-import { Container, Row_CenterCSS, Col_CenterCSS, HoverOpacityCSS } from './styled'
+import { SvgBook, SvgLogo, SvgHeart, SvgPhoto, SvgDiscord } from './svg';
+import { Container, Row_CenterCSS, Col_CenterCSS, HoverOpacityCSS } from './styled';
 
 
 const version = 'v.0.1'

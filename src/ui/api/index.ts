@@ -1,4 +1,4 @@
-import { Text2ImgParams, Img2ImgParams, ResponseJson } from '../../shared/api'
+import { Text2ImgParams, Img2ImgParams, ResponseJson } from '../../shared/api';
 import { requestErrorToPlugin } from '../lib/figma';
 
 
@@ -12,8 +12,8 @@ export async function requestImg(url: RequestInfo) {
     mode: 'cors' as RequestMode
   }
   const response = await fetch(url, options)
-  const data = await response.arrayBuffer();
-  return new Uint8Array(data);
+  const data = await response.arrayBuffer()
+  return new Uint8Array(data)
 }
 
 
@@ -31,8 +31,10 @@ export async function requestText2Img({ prompt, start, length, platform }: Text2
       platform: platform,
     })
   }
+  console.log(options.body)
   const response = await fetch(apiUrlText2Img, options)
   const json = await response.json() as ResponseJson
+  console.log(json)
 
   if (response.status !== 200) requestErrorToPlugin(json)
   return json
@@ -47,18 +49,21 @@ export async function requestImg2Img({ image, start, length, platform }: Img2Img
     platform: platform,
   }
   
-  const formData = new FormData();
-  for (const key in body) {
-    formData.append(key, body[key]);
-  }
+  const formData = new FormData()
+  formData.append('image', image, 'imageFile')
+  formData.append('start', String(start))
+  formData.append('length', String(length))
+  formData.append('platform', platform)
 
   const options = {
     method: 'POST',
     mode: 'cors' as RequestMode,
     body: formData,
   }
-  const response = await fetch(apiUrlImg2Img, options);
+  console.log(body)
+  const response = await fetch(apiUrlImg2Img, options)
   const json = await response.json() as ResponseJson
+  console.log(json)
 
   if (response.status !== 200) requestErrorToPlugin(json)
   return json

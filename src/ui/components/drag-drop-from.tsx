@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { Col_CenterCSS, HoverBrightnessCSS } from './styled';
 import { SvgUpload, SvgClear } from './svg';
 
-import { isFileImage } from '../lib/utils'
+import { isFileImage } from '../lib/utils';
   
 
 function DragDropForm({ file, setFile, filter, generateImg2Img, isLoading }) {
-  const dropArea = useRef(null);
-  const labelArea = useRef(null);
+  const dropArea = useRef(null)
+  const labelArea = useRef(null)
 
   const [fileUploaded, setFileUploaded] = useState(false)
 
@@ -67,11 +67,11 @@ function DragDropForm({ file, setFile, filter, generateImg2Img, isLoading }) {
 
   useEffect(() => {
     if (file && !isLoading) {
-      const dataTranster = new DataTransfer();
+      const dataTranster = new DataTransfer()
       dataTranster.items.add(file)
       
       const input = document.getElementById('fileElem') as HTMLInputElement
-      input.files = dataTranster.files;
+      input.files = dataTranster.files
 
       handleGenerateImg2Img(input.files)
     }
@@ -105,7 +105,7 @@ function DragDropForm({ file, setFile, filter, generateImg2Img, isLoading }) {
       </Form>
       <div id="gallery"></div>
     </Container>
-  );
+  )
 }
 
 

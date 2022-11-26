@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { HoverBackgroundCSS } from './styled'
-import { SvgSortUp, SvgCheck } from './svg'
+import { HoverBackgroundCSS } from './styled';
+import { SvgSortUp, SvgCheck } from './svg';
 
 
 function SelectPlatform({ filter, setFilter }) {

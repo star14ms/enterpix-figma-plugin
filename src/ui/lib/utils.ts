@@ -1,6 +1,6 @@
-import { requestgenerateImageToPlugin } from './figma'
-import { PlatformFilter } from '../../shared/api'
-import { ImageData } from '../../shared/api'
+import { requestgenerateImageToPlugin } from './figma';
+import { PlatformFilter } from '../../shared/api';
+import { ImageData } from '../../shared/api';
 
 
 export function makePlatformAPIArg(filter: PlatformFilter) {
@@ -9,10 +9,10 @@ export function makePlatformAPIArg(filter: PlatformFilter) {
   switch (filter) {
     case 'All':
       platform = platform + 'midjourney,stable-diffusion'
-      break;
+      break
     case 'Midjourney':
       platform = platform + 'midjourney'
-      break;
+      break
     case 'Stable Diffusion':
       platform = platform + 'stable-diffusion'
   }
@@ -22,23 +22,23 @@ export function makePlatformAPIArg(filter: PlatformFilter) {
 
 
 export function isFileImage(file: File) {
-  return file && file['type'].split('/')[0] === 'image';
+  return file && file['type'].split('/')[0] === 'image'
 }
 
 
 export async function img2File(id: string, callback?: Function) {
-  const canvas = document.createElement('canvas') as HTMLCanvasElement;
-  const image = document.getElementById(id) as HTMLImageElement;
-  const ctx = canvas.getContext("2d");
+  const canvas = document.createElement('canvas') as HTMLCanvasElement
+  const image = document.getElementById(id) as HTMLImageElement
+  const ctx = canvas.getContext("2d")
   document.body.insertBefore(canvas, document.body.children[0])
   
-  image.crossOrigin = 'Anonymous';
+  image.crossOrigin = 'Anonymous'
   let file: File
 
   image.onload = async () => {
-    canvas.width = image.width;
-    canvas.height = image.height;
-    ctx.drawImage(image, 0, 0, image.width, image.height);
+    canvas.width = image.width
+    canvas.height = image.height
+    ctx.drawImage(image, 0, 0, image.width, image.height)
     
     const dataURL = canvas.toDataURL('image/png')
     canvas.remove()
@@ -48,7 +48,7 @@ export async function img2File(id: string, callback?: Function) {
     .then(async blob => {
       file = new File([blob], "capture.png", {
         type: 'image/png'
-      });
+      })
     })
 
     if (callback) await callback(file)
@@ -61,14 +61,14 @@ export function createImgItem(
   setFile: React.Dispatch<React.SetStateAction<File>>,
   setMenu?: React.Dispatch<React.SetStateAction<number>>,
 ) {
-  const div = document.createElement('div');
+  const div = document.createElement('div')
 
-  const img = document.createElement('img');
+  const img = document.createElement('img')
   img.id = image.id
   img.src = image.compressedUrl
   img.title = image.prompt
   img.addEventListener('click', async () => {
-    const array = await getImg(image.compressedUrl);
+    const array = await getImg(image.compressedUrl)
     requestgenerateImageToPlugin(array, image.width, image.height)
     setSelectedImage((selectedImage: ImageData | null) => {
       if (selectedImage === null) {
@@ -77,9 +77,9 @@ export function createImgItem(
       }
       return selectedImage
     })
-  });
+  })
 
-  const button = document.createElement('button');
+  const button = document.createElement('button')
   button.innerHTML = 'Search Similar Style'
   button.addEventListener('click', async () => {
     await img2File(image.id, (file: File) => {

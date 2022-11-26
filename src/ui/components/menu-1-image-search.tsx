@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ContainerCanHide, FlexEnd, DivPadding } from './styled'
+import { ContainerCanHide, FlexEnd, DivPadding } from './styled';
 import SelectPlatform from './platform-select';
-import DragDropForm from './drag-drop-from'
+import DragDropForm from './drag-drop-from';
 import SearchResult from './search-result';
 import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
 
-import { PlatformFilter, ImageData } from '../../shared/api'
+import { PlatformFilter, ImageData } from '../../shared/api';
 import useImg2Img from '../hooks/useImg2Img';
 import useScroll from '../hooks/useScroll';
 import useRequestManager from '../hooks/useRequestManager';
@@ -14,16 +14,16 @@ import { img2File } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, menu, setMenu }){
-  const getImg2Img = useImg2Img();
-  const { isScrollTop, isScrollBottom } = useScroll();
+  const getImg2Img = useImg2Img()
+  const { isScrollTop, isScrollBottom } = useScroll()
   const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
   
-  const imgCol1 = useRef(null);
-  const imgCol2 = useRef(null);
+  const imgCol1 = useRef(null)
+  const imgCol2 = useRef(null)
 
-  const [filter, setFilter] = useState<PlatformFilter>('All');
-  const [canClear, setCanClear] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<ImageData>(null);
+  const [filter, setFilter] = useState<PlatformFilter>('All')
+  const [canClear, setCanClear] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<ImageData>(null)
 
   const generateImg2Img = async () => {
     preRequest()
@@ -31,7 +31,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     clearResult()
     await img2File('image-uploaded', async (newfile: File) => {
       setFile(newfile)
-      const json = await getImg2Img(newfile, filter);
+      const json = await getImg2Img(newfile, filter)
       postRequest(json, true)
     })
     setCanClear(true)
@@ -39,7 +39,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
 
   const generateImg2ImgAdd = async () => {
     preRequest()
-    const json = await getImg2Img(file, filter);
+    const json = await getImg2Img(file, filter)
     postRequest(json, true)
   }
 
@@ -101,7 +101,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
       />
     }
     </>
-    );
+    )
 }
 
-export default MenuImageSearch;
+export default MenuImageSearch

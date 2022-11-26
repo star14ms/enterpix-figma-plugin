@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, HoverOpacityCSS, DivRelative } from './styled'
+import { Container, HoverOpacityCSS, DivRelative } from './styled';
 
 import banner from '../../images/banner.png';
 import * as image from '../../images/keywords';

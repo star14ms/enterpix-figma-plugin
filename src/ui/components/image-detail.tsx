@@ -12,28 +12,28 @@ import { img2File } from '../lib/utils';
 
 
 function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, setMenu }) {
-  const getImg2Img = useImg2Img();
-  const { isScrollTop, isScrollBottom } = useScroll();
+  const getImg2Img = useImg2Img()
+  const { isScrollTop, isScrollBottom } = useScroll()
   const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
 
-  const imgCol1 = useRef(null);
-  const imgCol2 = useRef(null);
+  const imgCol1 = useRef(null)
+  const imgCol2 = useRef(null)
 
-  const [file, setImageDetailFile] = useState<File>(null);
-  const [imageDetailMenu, setImageDetailMenu] = useState<File>(null);
+  const [file, setImageDetailFile] = useState<File>(null)
+  const [imageDetailMenu, setImageDetailMenu] = useState<File>(null)
 
   const generateImg2Img = async () => {
     preRequest()
     await img2File('_' + selectedImage.id, async (newfile: File) => {
       setImageDetailFile(newfile)
-      const json = await getImg2Img(newfile, filter);
+      const json = await getImg2Img(newfile, filter)
       postRequest(json, true)
     })
   }
 
   const generateImg2ImgAdd = async () => {
     preRequest()
-    const json = await getImg2Img(file, filter);
+    const json = await getImg2Img(file, filter)
     postRequest(json, true)
   }
 
@@ -92,7 +92,7 @@ function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, s
  
       <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
     </Container>
-  );
+  )
 }
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HoverBackgroundCSS } from './styled'
+import { HoverBackgroundCSS } from './styled';
 
 
 function Header({ menu, setMenu }) {

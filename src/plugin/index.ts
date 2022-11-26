@@ -7,14 +7,14 @@ import {
 } from '../shared';
 
 
-figma.showUI(__html__, { title: 'Enterpix', width: 400, height: 600 });
+figma.showUI(__html__, { title: 'Enterpix', width: 400, height: 600 })
 
 
 async function loadFonts() {
   await figma.loadFontAsync({
     family: 'Roboto',
     style: 'Regular',
-  });
+  })
 }
 
 
@@ -26,33 +26,33 @@ function isPayload(payload: unknown): payload is PluginMessagePayload {
       Object.prototype.hasOwnProperty.call(payload, 'json') ||
       Object.prototype.hasOwnProperty.call(payload, 'array')
     )
-  );
+  )
 }
 
 
 async function generateImage({ array, width, height }: generateImagePayload) {
-  const imageHash = figma.createImage(array).hash;
-  const currentSelectionNode = figma.currentPage.selection[0];
+  const imageHash = figma.createImage(array).hash
+  const currentSelectionNode = figma.currentPage.selection[0]
 
   if (currentSelectionNode?.type === 'RECTANGLE') {
-    currentSelectionNode.resize(width, height);
+    currentSelectionNode.resize(width, height)
     currentSelectionNode.fills = [
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
-    ];
+    ]
   } else {
-    const newNode = figma.createRectangle();
+    const newNode = figma.createRectangle()
     if (!width || !height) {
       width = 500
       height = 500
     }
-    newNode.resize(width, height);
+    newNode.resize(width, height)
     const bounds = figma.viewport.bounds
     newNode.x = bounds.x + bounds.width / 2 - width / 2
     newNode.y = bounds.y + bounds.height / 2 - height / 2
     newNode.fills = [
       { type: 'IMAGE', scaleMode: 'FILL', imageHash: imageHash },
-    ];
-    figma.currentPage.appendChild(newNode);
+    ]
+    figma.currentPage.appendChild(newNode)
     figma.currentPage.selection = [newNode]
   }
 }
@@ -68,10 +68,10 @@ loadFonts().then(() => {
     const callbackMap: Record<PluginAction, PluginCallbackFunction> = {
       generateImage,
       error,
-    };
+    }
 
     if (isPayload(payload) && callbackMap[payload.type]) {
-      callbackMap[payload.type](payload);
+      callbackMap[payload.type](payload)
     }
-  };
-});
+  }
+})

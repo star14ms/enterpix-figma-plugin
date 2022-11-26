@@ -3,8 +3,8 @@ import { ResponseJson } from "../../shared/api";
 
 
 export default function useRequestManager() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState({ images: null, add: false });
+  const [isLoading, setIsLoading] = useState(false)
+  const [searchResult, setSearchResult] = useState({ images: null, add: false })
 
   const preRequest = () => {
     if (isLoading) return
@@ -25,5 +25,5 @@ export default function useRequestManager() {
     setSearchResult,
     preRequest,
     postRequest,
-  };
+  }
 }

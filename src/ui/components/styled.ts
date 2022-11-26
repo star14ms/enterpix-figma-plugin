@@ -10,11 +10,11 @@ export const ContainerCSS = css`
   box-sizing: border-box;
   gap: 16px;
   color: #9CA3AF;
-`;
+`
 
 export const Container = styled.div`
   ${ContainerCSS}
-`;
+`
 
 export const ContainerCanHide = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const ContainerCanHide = styled.div`
   &.hidden {
     display: none;
   }
-`;
+`
 
 export const RowCSS = css`
   display: flex;
@@ -36,42 +36,42 @@ export const RowCSS = css`
   width: 100%;
   box-sizing: border-box;
   gap: 8px;
-`;
+`
 
 export const ColCSS = css`
   ${RowCSS}
   flex-direction: column;
-`;
+`
 
 export const Row = styled.div`
   ${RowCSS}
-`;
+`
 
 export const Col = styled.div`
   ${RowCSS}
   flex-direction: column;
-`;
+`
 
 export const Col_CenterCSS = css`
   ${RowCSS}
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
+`
 
 export const Col_Center = styled.div`
   ${Col_CenterCSS}
-`;
+`
 
 export const Row_CenterCSS = css`
   ${RowCSS}
   justify-content: center;
   align-items: center;
-`;
+`
 
 export const Row_Center = styled.div`
   ${Row_CenterCSS}
-`;
+`
 
 export const HoverOpacityCSS = css`
   &:hover {

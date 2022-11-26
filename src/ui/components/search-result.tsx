@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Row, HoverBackgroundCSS } from './styled'
+import { Row, HoverBackgroundCSS } from './styled';
 
-import { ImageData } from '../../shared/api'
+import { ImageData } from '../../shared/api';
 import useGetImg from '../hooks/useGetImg';
 import { createImgItem } from '../lib/utils';
 

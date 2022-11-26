@@ -1,31 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { ContainerCanHide, Row_CenterCSS, FlexEnd, HoverOpacityCSS, DivPadding } from './styled'
-import { SvgInfo, SvgTimes } from './svg'
+import { ContainerCanHide, Row_CenterCSS, FlexEnd, HoverOpacityCSS, DivPadding } from './styled';
+import { SvgInfo, SvgTimes } from './svg';
 import SelectPlatform from './platform-select';
 import SearchResult from './search-result';
 import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
 
-import { PlatformFilter, ImageData } from '../../shared/api'
+import { PlatformFilter, ImageData } from '../../shared/api';
 import useText2Img from '../hooks/useText2Img';
 import useScroll from '../hooks/useScroll';
 import useRequestManager from '../hooks/useRequestManager';
 
 
 function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
-  const getText2Img = useText2Img();
-  const { scrollY, isScrollTop, isScrollBottom } = useScroll();
+  const getText2Img = useText2Img()
+  const { scrollY, isScrollTop, isScrollBottom } = useScroll()
   const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
   
-  const gradientRef = useRef(null);
-  const inputTextRef = useRef(null);
-  const imgCol1 = useRef(null);
-  const imgCol2 = useRef(null);
+  const gradientRef = useRef(null)
+  const inputTextRef = useRef(null)
+  const imgCol1 = useRef(null)
+  const imgCol2 = useRef(null)
 
-  const [filter, setFilter] = useState<PlatformFilter>('All');
-  const [canClear, setCanClear] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<ImageData>(null);
+  const [filter, setFilter] = useState<PlatformFilter>('All')
+  const [canClear, setCanClear] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<ImageData>(null)
 
   const generateText2Img = async (prompt: string) => {
     preRequest()
@@ -33,20 +33,20 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     setSelectedImage(null)
     clearResult()
     setPrompt(inputTextRef.current!.value)
-    const json = await getText2Img(prompt, filter);
+    const json = await getText2Img(prompt, filter)
     postRequest(json, false)
     if (filter !== 'All') setCanClear(true)
-  };
+  }
 
   const generateText2ImgAdd = async () => {
     preRequest()
-    const json = await getText2Img(prompt, filter);
+    const json = await getText2Img(prompt, filter)
     postRequest(json, true)
-  };
+  }
 
   const handleOnKeyPress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      await generateText2Img(inputTextRef.current!.value); // Enter 입력이 되면 클릭 이벤트 실행
+      await generateText2Img(inputTextRef.current!.value) // Enter 입력이 되면 클릭 이벤트 실행
     }
   }
 
@@ -151,7 +151,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
       />
     }
     </>
-  );
+  )
 }
 
 
@@ -256,4 +256,4 @@ const Input = styled.input`
 `
 
 
-export default MenuSearch;
+export default MenuSearch
