@@ -7,7 +7,7 @@ import { makePlatformAPIArg } from '../lib/utils';
 function useText2Img() {
   const startInit = Math.floor(Math.random() * 1000)
   const [start, setStart] = useState(startInit)
-  const length = 20
+  const length = 50
 
   const getText2Img = async (prompt: string, filter: PlatformFilter) => {
     const platform = makePlatformAPIArg(filter)

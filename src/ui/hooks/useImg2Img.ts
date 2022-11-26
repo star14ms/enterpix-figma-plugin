@@ -7,7 +7,7 @@ import { makePlatformAPIArg } from '../lib/utils';
 function useImg2Img() {
   const startInit = Math.floor(Math.random() * 1000)
   const [start, setStart] = useState(startInit)
-  const length = 20
+  const length = 50
 
   const getImg2Img = async (image: File, filter: PlatformFilter) => {
     const platform = makePlatformAPIArg(filter)
