@@ -69,11 +69,12 @@ export function createImgItem(
   img.addEventListener('click', async () => {
     const array = await getImg(image.compressedUrl);
     requestgenerateImageToPlugin(array, image.width, image.height)
-    setSelectedImage(value => {
-      if (value === null) {
+    setSelectedImage((selectedImage: ImageData | null) => {
+      if (selectedImage === null) {
         window.scrollTo({ top: 0 })
+        return image
       }
-      return image 
+      return selectedImage
     })
   });
 
