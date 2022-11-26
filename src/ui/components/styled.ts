@@ -141,57 +141,6 @@ export const FlexEnd = styled.div`
   }
 `
 
-export const ImgCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  box-sizing: border-box;
-  gap: 8px;
-
-  div {
-    position: relative;
-
-    img {
-      width: 100%;
-      transition: 0.15s;
-
-      &:hover {
-        opacity: 0.8;
-        cursor: pointer;
-      }
-    }
-    
-    button {
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
-      display: flex;
-      align-items: center;
-      visibility: hidden;
-
-      width: 125px;
-      height: 24px;
-      padding: 6px 6px 6px 10px;
-      gap: 2px;
-
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
-      transition: 0.15s;
-
-      font-weight: 500;
-      font-size: 10px;
-      line-height: 10px;
-      color: #6B7280;
-
-      ${HoverBackgroundCSS}
-    }
-    
-    &:hover button {
-      visibility: visible;
-    }
-  }
-`;
-
 export const DivPadding = styled.div`
   padding: 32px 0;
 `

@@ -1,19 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Container, ContainerCanHide, Row, FlexEnd, ImgCol, DivPadding } from './styled'
+import { ContainerCanHide, FlexEnd, DivPadding } from './styled'
 import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
+import SearchResult from './search-result';
 import ImageDetail from './image-detail';
 import useScroll from '../hooks/useScroll';
 import ButtonScrollTop from './btn-scroll-top';
 
 import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
-import useGetImg from '../hooks/useGetImg';
-import { createImgItem, img2File } from '../lib/utils';
+import { img2File } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, menu, setMenu }){
-  const getImg = useGetImg();
   const getImg2Img = useImg2Img();
   const { isScrollTop, isScrollBottom } = useScroll();
   
@@ -22,40 +21,12 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
 
   const [filter, setFilter] = useState<PlatformFilter>('All');
   const [isLoading, setIsLoading] = useState(false);
-  const [col1Height, setCol1Height] = useState(0);
-  const [col2Height, setCol2Height] = useState(0);
   const [canClear, setCanClear] = useState(false);
+  const [searchResult, setSearchResult] = useState({ images: null, add: false });
   const [selectedImage, setSelectedImage] = useState<ImageData>(null);
 
-  const showImages = (images: ImageData[], add: boolean = false) => {
-    let col1H: number, col2H: number
-
-    if (!add) {
-      setCol1Height(0)
-      setCol2Height(0)
-      col1H = 0, col2H = 0
-    } else {
-      col1H = col1Height, col2H = col2Height
-    }
-
-    for (const image of images) {
-      const imageItem = createImgItem(image, getImg, setSelectedImage, setFile, setMenu)
-
-      if (col1H > col2H) {
-        col2H = col2H + image.height / image.width;
-        imgCol2.current!.appendChild(imageItem);
-      } else {
-        col1H = col1H + image.height / image.width;
-        imgCol1.current!.appendChild(imageItem);
-      }
-    }
-    setCol1Height(col1H)
-    setCol2Height(col2H)
-  }
-
   const generateImg2Img = async () => {
-    if (isLoading) return
-    setIsLoading(true)
+    preRequest()
     setSelectedImage(null)
     clearResult()
     await img2File('image-uploaded', async (newfile: File) => {
@@ -67,15 +38,19 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   }
 
   const generateImg2ImgAdd = async () => {
-    if (isLoading) return
-    setIsLoading(true)
+    preRequest()
     const json = await getImg2Img(file, filter);
     postRequest(json, true)
   }
 
+  const preRequest = () => {
+    if (isLoading) return
+    setIsLoading(true)
+  }
+
   const postRequest = (json: ResponseJson, add: boolean) => {
     if (json.images) {
-      showImages(json.images, add);
+      setSearchResult({ images: json.images, add: add })
     }
     setIsLoading(false)
   }
@@ -87,7 +62,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   }
 
   useEffect(() => {
-    if (menu === 1 && !isScrollTop && isScrollBottom) {
+    if (menu === 1 && !isScrollTop && isScrollBottom && !isLoading) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])
@@ -109,10 +84,14 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
           </span>
         </FlexEnd>
 
-        <Row>
-          <ImgCol ref={imgCol1}></ImgCol>
-          <ImgCol ref={imgCol2}></ImgCol>
-        </Row>
+        <SearchResult 
+          searchResult={searchResult} 
+          imgCol1={imgCol1}
+          imgCol2={imgCol2}
+          setMenu={setMenu} 
+          setFile={setFile} 
+          setSelectedImage={setSelectedImage}
+        />
         </>
       }
 
