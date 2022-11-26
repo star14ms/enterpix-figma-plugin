@@ -6,7 +6,7 @@ import { SvgUpload, SvgClear } from './svg';
 import { isFileImage } from '../lib/utils'
   
 
-function DragDropForm({ file, setFile, filter, generateImg2Img }) {
+function DragDropForm({ file, setFile, filter, generateImg2Img, isLoading }) {
   const dropArea = useRef(null);
   const labelArea = useRef(null);
 
@@ -35,13 +35,16 @@ function DragDropForm({ file, setFile, filter, generateImg2Img }) {
     handleGenerateImg2Img(files)
   }
 
-  function previewFile(file: File) {
+  function previewFile(file: File, callback?: Function) {
     let reader = new FileReader()
     reader.readAsDataURL(file)
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       let img = document.createElement('img')
+      img.id = 'image-uploaded'
       img.src = String(reader.result)
       document.getElementById('gallery').replaceChildren(img)
+
+      if (callback) await callback()
     }
   }
 
@@ -50,8 +53,9 @@ function DragDropForm({ file, setFile, filter, generateImg2Img }) {
     if (!isFileImage(file)) return
     setFileUploaded(true)
     dropArea.current!.classList.add('uploaded')
-    previewFile(file)
-    await generateImg2Img(file)
+    previewFile(file, async () => {
+      await generateImg2Img()
+    })
   }
 
   function clear() {
@@ -62,7 +66,7 @@ function DragDropForm({ file, setFile, filter, generateImg2Img }) {
   }
 
   useEffect(() => {
-    if (file) {
+    if (file && !isLoading) {
       const dataTranster = new DataTransfer();
       dataTranster.items.add(file)
       

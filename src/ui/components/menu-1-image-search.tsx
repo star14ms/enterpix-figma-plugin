@@ -9,7 +9,7 @@ import ButtonScrollTop from './btn-scroll-top';
 import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
-import { createImgItem } from '../lib/utils';
+import { createImgItem, img2File } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, menu, setMenu }){
@@ -53,14 +53,16 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     setCol2Height(col2H)
   }
 
-  const generateImg2Img = async (file: File) => {
+  const generateImg2Img = async () => {
     if (isLoading) return
     setIsLoading(true)
     setSelectedImage(null)
     clearResult()
-    setFile(file)
-    const json = await getImg2Img(file, filter);
-    postRequest(json, false)
+    await img2File('image-uploaded', async (newfile: File) => {
+      setFile(newfile)
+      const json = await getImg2Img(newfile, filter);
+      postRequest(json, true)
+    })
     setCanClear(true)
   }
 
@@ -85,7 +87,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   }
 
   useEffect(() => {
-    if (menu === 1 && isScrollBottom) {
+    if (menu === 1 && !isScrollTop && isScrollBottom) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])
@@ -93,7 +95,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   return (
     <>
     <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
-      <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} filter={filter}></DragDropForm>
+      <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} filter={filter} isLoading={isLoading}></DragDropForm>
 
       {file && 
         <>
