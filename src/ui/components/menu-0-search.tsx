@@ -153,7 +153,14 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     </ContainerCanHide>
 
     {selectedImage && 
-      <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} filter={filter} setFile={setFile} setMenu={setMenu}/>
+      <ImageDetail 
+        selectedImage={selectedImage} 
+        setSelectedImage={setSelectedImage} 
+        filter={filter} 
+        setFile={setFile} 
+        menu={menu} 
+        setMenu={setMenu}
+      />
     }
     </>
   );

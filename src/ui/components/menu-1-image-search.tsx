@@ -62,7 +62,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   }
 
   useEffect(() => {
-    if (menu === 1 && !isScrollTop && isScrollBottom && !isLoading) {
+    if (menu === 1 && !isScrollTop && isScrollBottom && !selectedImage && !isLoading) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])
@@ -103,7 +103,14 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     </ContainerCanHide>
 
     {selectedImage && 
-      <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} filter={filter} setFile={setFile} setMenu={setMenu}/>
+      <ImageDetail 
+        selectedImage={selectedImage} 
+        setSelectedImage={setSelectedImage} 
+        filter={filter} 
+        setFile={setFile} 
+        menu={menu} 
+        setMenu={setMenu}
+      />
     }
     </>
     );

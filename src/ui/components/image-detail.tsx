@@ -11,7 +11,7 @@ import useScroll from '../hooks/useScroll';
 import { img2File } from '../lib/utils';
 
 
-function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, setMenu }) {
+function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, setMenu }) {
   const getImg2Img = useImg2Img();
   const { isScrollTop, isScrollBottom } = useScroll();
 
@@ -21,6 +21,7 @@ function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, setMenu
   const [isLoading, setIsLoading] = useState(false);
   const [searchResult, setSearchResult] = useState({ images: null, add: false });
   const [file, setImageDetailFile] = useState<File>(null);
+  const [imageDetailMenu, setImageDetailMenu] = useState<File>(null);
 
   const generateImg2Img = async () => {
     preRequest()
@@ -50,16 +51,20 @@ function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, setMenu
   }
 
   const searchSimilar = async () => {
+    if (menu === 1) {
+      setImageDetailFile(null)
+    }
     setFile(file)
     setMenu(1)
   }
 
   useEffect(() => {
     generateImg2Img()
+    setImageDetailMenu(menu)
   }, [])
 
   useEffect(() => {
-    if (!isScrollTop && isScrollBottom) {
+    if (!isScrollTop && isScrollBottom && !isLoading && menu === imageDetailMenu) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])
