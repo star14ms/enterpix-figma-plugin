@@ -31,10 +31,10 @@ export async function requestText2Img({ prompt, start, length, platform }: Text2
       platform: platform,
     })
   }
-  console.log(options.body)
+  // console.log(options.body)
   const response = await fetch(apiUrlText2Img, options)
   const json = await response.json() as ResponseJson
-  console.log(json)
+  // console.log(json)
 
   if (response.status !== 200) requestErrorToPlugin(json)
   return json
@@ -42,12 +42,12 @@ export async function requestText2Img({ prompt, start, length, platform }: Text2
 
 
 export async function requestImg2Img({ image, start, length, platform }: Img2ImgParams ) {
-  const body = {
-    image: image,
-    start: String(start),
-    length: String(length),
-    platform: platform,
-  }
+  // const body = {
+  //   image: image,
+  //   start: String(start),
+  //   length: String(length),
+  //   platform: platform,
+  // }
   
   const formData = new FormData()
   formData.append('image', image, 'imageFile')
@@ -60,10 +60,10 @@ export async function requestImg2Img({ image, start, length, platform }: Img2Img
     mode: 'cors' as RequestMode,
     body: formData,
   }
-  console.log(body)
+  // console.log(body)
   const response = await fetch(apiUrlImg2Img, options)
   const json = await response.json() as ResponseJson
-  console.log(json)
+  // console.log(json)
 
   if (response.status !== 200) requestErrorToPlugin(json)
   return json
