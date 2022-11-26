@@ -9,7 +9,7 @@ import ButtonScrollTop from './btn-scroll-top';
 import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
 import useGetImg from '../hooks/useGetImg';
-import { searchSimilar, createImgItem } from '../lib/utils';
+import { createImgItem } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, menu, setMenu }){
@@ -25,7 +25,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
   const [canClear, setCanClear] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState<ImageData>(null);
 
   const showImages = (images: ImageData[], add: boolean = false) => {
     let col1H: number, col2H: number
@@ -39,7 +39,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     }
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, searchSimilar, setSelectedImage, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, setSelectedImage, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -56,7 +56,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   const generateImg2Img = async (file: File) => {
     if (isLoading) return
     setIsLoading(true)
-    setSelectedImage('')
+    setSelectedImage(null)
     clearResult()
     setFile(file)
     const json = await getImg2Img(file, filter);
@@ -92,28 +92,20 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
 
   return (
     <>
-    <Container>
-      <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
-        <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} filter={filter}></DragDropForm>
-
-        {file && 
-          <>
-          <FlexEnd>
-            <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
-              Clear
-            </span>
-            <span className="select-platform">
-              <span>Filter by</span>
-              <SelectPlatform filter={filter} setFilter={setFilter}></SelectPlatform>
-            </span>
-          </FlexEnd>
-          </>
-        }
-      </ContainerCanHide>
+    <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
+      <DragDropForm file={file} setFile={setFile} generateImg2Img={generateImg2Img} filter={filter}></DragDropForm>
 
       {file && 
         <>
-        <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} setFile={setFile} setMenu={setMenu}/>
+        <FlexEnd>
+          <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+            Clear
+          </span>
+          <span className="select-platform">
+            <span>Filter by</span>
+            <SelectPlatform filter={filter} setFilter={setFilter}></SelectPlatform>
+          </span>
+        </FlexEnd>
 
         <Row>
           <ImgCol ref={imgCol1}></ImgCol>
@@ -127,7 +119,11 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
       }
 
       <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
-    </Container>
+    </ContainerCanHide>
+
+    {selectedImage && 
+      <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} filter={filter} setFile={setFile} setMenu={setMenu}/>
+    }
     </>
     );
 }

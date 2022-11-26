@@ -1,15 +1,19 @@
 import styled, { css } from 'styled-components';
 
 
-export const Container = styled.div`
+export const ContainerCSS = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   box-sizing: border-box;
   gap: 16px;
   color: #9CA3AF;
+`;
+
+export const Container = styled.div`
+  ${ContainerCSS}
 `;
 
 export const ContainerCanHide = styled.div`

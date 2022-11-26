@@ -9,8 +9,8 @@ import ButtonScrollTop from './btn-scroll-top';
 import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useGetImg from '../hooks/useGetImg';
-import { searchSimilar, createImgItem } from '../lib/utils';
 import useScroll from '../hooks/useScroll';
+import { createImgItem } from '../lib/utils';
 
 
 function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
@@ -28,7 +28,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const [col1Height, setCol1Height] = useState(0);
   const [col2Height, setCol2Height] = useState(0);
   const [canClear, setCanClear] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState<ImageData>(null);
 
   const showImages = (images: ImageData[], add: boolean = false) => {
     let col1H: number, col2H: number
@@ -42,7 +42,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     }
 
     for (const image of images) {
-      const imageItem = createImgItem(image, getImg, searchSimilar, setSelectedImage, setFile, setMenu)
+      const imageItem = createImgItem(image, getImg, setSelectedImage, setFile, setMenu)
 
       if (col1H > col2H) {
         col2H = col2H + image.height / image.width;
@@ -60,7 +60,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     if (isLoading) return
     if (prompt !== '') gradientRef.current!.classList.add('is-finish')
     setIsLoading(true)
-    setSelectedImage('')
+    setSelectedImage(null)
     clearResult()
     setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, filter);
@@ -121,50 +121,46 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   }, [filter])
 
   useEffect(() => {
-    if (menu === 0 && !isScrollTop && isScrollBottom) {
+    if (menu === 0 && !isScrollTop && isScrollBottom && !selectedImage) {
       generateText2ImgAdd()
     }
   }, [isScrollBottom])
 
   return (
     <>
-    <Container>
-      <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
-        <Row_Center_CanFixed className={scrollY >= 40 ? 'fixed' : ''}>
-          <SpanGradient ref={gradientRef}>
-            <Input 
-              ref={inputTextRef} type='text' placeholder='Search images...'
-              onKeyPress={e => handleOnKeyPress(e)}
-              onChange={e => handleOnChange(e)}
-              defaultValue={prompt}
-            >
-            </Input>
+    <ContainerCanHide className={selectedImage ? 'hidden' : ''}>
+      <Row_Center_CanFixed className={!selectedImage && scrollY >= 40 ? 'fixed' : ''}>
+        <SpanGradient ref={gradientRef}>
+          <Input 
+            ref={inputTextRef} type='text' placeholder='Search images...'
+            onKeyPress={e => handleOnKeyPress(e)}
+            onChange={e => handleOnChange(e)}
+            defaultValue={prompt}
+          >
+          </Input>
 
-            <SpanClear 
-              className='clear' 
-              onClick={clearInput}
-            >
-              <SvgTimes />
-            </SpanClear>
-          </SpanGradient>
+          <SpanClear 
+            className='clear' 
+            onClick={clearInput}
+          >
+            <SvgTimes />
+          </SpanClear>
+        </SpanGradient>
   
-          <SpanHover onClick={e => setMenu(3)}>
-            <SvgInfo />
-          </SpanHover>
-        </Row_Center_CanFixed>
+        <SpanHover onClick={e => setMenu(3)}>
+          <SvgInfo />
+        </SpanHover>
+      </Row_Center_CanFixed>
   
-        <FlexEnd className={scrollY >= 40 ? 'margin-top' : ''}>
-          <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
-            Clear
-          </span>
-          <span className="select-platform">
-            <span>Filter by</span>
-            <SelectPlatform filter={filter} setFilter={setFilter}></SelectPlatform>
-          </span>
-        </FlexEnd>
-      </ContainerCanHide>
-
-      <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} setFile={setFile} setMenu={setMenu}/>
+      <FlexEnd className={!selectedImage && scrollY >= 40 ? 'margin-top' : ''}>
+        <span onClick={e => setFilter('All')} className={'btn-clear' + (canClear ? '' : ' disabled')}>
+          Clear
+        </span>
+        <span className="select-platform">
+          <span>Filter by</span>
+          <SelectPlatform filter={filter} setFilter={setFilter}></SelectPlatform>
+        </span>
+      </FlexEnd>
 
       <Row>
         <ImgCol ref={imgCol1}></ImgCol>
@@ -176,7 +172,11 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
       }
  
       <ButtonScrollTop isScrollTop={isScrollTop}></ButtonScrollTop>
-    </Container>
+    </ContainerCanHide>
+
+    {selectedImage && 
+      <ImageDetail selectedImage={selectedImage} setSelectedImage={setSelectedImage} filter={filter} setFile={setFile} setMenu={setMenu}/>
+    }
     </>
   );
 }

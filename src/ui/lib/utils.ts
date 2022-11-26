@@ -26,7 +26,7 @@ export function isFileImage(file: File) {
 }
 
 
-export async function searchSimilar(id: string, setFile: Function, setMenu: Function) {
+export async function img2File(id: string, callback?: Function) {
   const canvas = document.createElement('canvas') as HTMLCanvasElement;
   const image = document.getElementById(id) as HTMLImageElement;
   const ctx = canvas.getContext("2d");
@@ -51,20 +51,14 @@ export async function searchSimilar(id: string, setFile: Function, setMenu: Func
       });
     })
 
-    setFile(file)
-
-    if (setMenu) {
-      setMenu(1)
-    }
+    if (callback) await callback(file)
   }
-
-  return file
 }
 
 
 export function createImgItem(
-  image: ImageData, getImg: Function, searchSimilar: Function, setSelectedImage: Function,
-  setFile: React.Dispatch<React.SetStateAction<number>>,
+  image: ImageData, getImg: Function, setSelectedImage: Function,
+  setFile: React.Dispatch<React.SetStateAction<File>>,
   setMenu?: React.Dispatch<React.SetStateAction<number>>,
 ) {
   const div = document.createElement('div');
@@ -76,7 +70,7 @@ export function createImgItem(
     const array = await getImg(image.compressedUrl);
     requestgenerateImageToPlugin(array, image.width, image.height)
     setSelectedImage(value => {
-      if (value === '') {
+      if (value === null) {
         window.scrollTo({ top: 0 })
       }
       return image 
@@ -86,7 +80,10 @@ export function createImgItem(
   const button = document.createElement('button');
   button.innerHTML = 'Search Similar Style'
   button.addEventListener('click', async () => {
-    await searchSimilar(image.id, setFile, setMenu)
+    await img2File(image.id, (file: File) => {
+      setFile(file)
+      setMenu(1)
+    })
   })
   
   button.innerHTML = button.innerHTML + 
