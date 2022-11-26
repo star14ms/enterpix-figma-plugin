@@ -5,21 +5,20 @@ import { SvgSortRight, SvgArrow } from './svg'
 import SearchResult from './search-result';
 import ButtonScrollTop from './btn-scroll-top';
 
-import { ResponseJson } from '../../shared/api';
 import useImg2Img from '../hooks/useImg2Img';
 import useScroll from '../hooks/useScroll';
+import useRequestManager from '../hooks/useRequestManager';
 import { img2File } from '../lib/utils';
 
 
 function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, setMenu }) {
   const getImg2Img = useImg2Img();
   const { isScrollTop, isScrollBottom } = useScroll();
+  const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
 
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState({ images: null, add: false });
   const [file, setImageDetailFile] = useState<File>(null);
   const [imageDetailMenu, setImageDetailMenu] = useState<File>(null);
 
@@ -36,18 +35,6 @@ function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, s
     preRequest()
     const json = await getImg2Img(file, filter);
     postRequest(json, true)
-  }
-
-  const preRequest = () => {
-    if (isLoading) return
-    setIsLoading(true)
-  }
-
-  const postRequest = (json: ResponseJson, add: boolean) => {
-    if (json.images) {
-      setSearchResult({ images: json.images, add: add })
-    }
-    setIsLoading(false)
   }
 
   const searchSimilar = async () => {

@@ -4,25 +4,25 @@ import SelectPlatform from './platform-select';
 import DragDropForm from './drag-drop-from'
 import SearchResult from './search-result';
 import ImageDetail from './image-detail';
-import useScroll from '../hooks/useScroll';
 import ButtonScrollTop from './btn-scroll-top';
 
-import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
+import { PlatformFilter, ImageData } from '../../shared/api'
 import useImg2Img from '../hooks/useImg2Img';
+import useScroll from '../hooks/useScroll';
+import useRequestManager from '../hooks/useRequestManager';
 import { img2File } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, menu, setMenu }){
   const getImg2Img = useImg2Img();
   const { isScrollTop, isScrollBottom } = useScroll();
+  const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
   
   const imgCol1 = useRef(null);
   const imgCol2 = useRef(null);
 
   const [filter, setFilter] = useState<PlatformFilter>('All');
-  const [isLoading, setIsLoading] = useState(false);
   const [canClear, setCanClear] = useState(false);
-  const [searchResult, setSearchResult] = useState({ images: null, add: false });
   const [selectedImage, setSelectedImage] = useState<ImageData>(null);
 
   const generateImg2Img = async () => {
@@ -41,18 +41,6 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     preRequest()
     const json = await getImg2Img(file, filter);
     postRequest(json, true)
-  }
-
-  const preRequest = () => {
-    if (isLoading) return
-    setIsLoading(true)
-  }
-
-  const postRequest = (json: ResponseJson, add: boolean) => {
-    if (json.images) {
-      setSearchResult({ images: json.images, add: add })
-    }
-    setIsLoading(false)
   }
 
   const clearResult = () => {

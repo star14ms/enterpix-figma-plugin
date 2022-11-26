@@ -7,14 +7,16 @@ import SearchResult from './search-result';
 import ImageDetail from './image-detail';
 import ButtonScrollTop from './btn-scroll-top';
 
-import { PlatformFilter, ImageData, ResponseJson } from '../../shared/api'
+import { PlatformFilter, ImageData } from '../../shared/api'
 import useText2Img from '../hooks/useText2Img';
 import useScroll from '../hooks/useScroll';
+import useRequestManager from '../hooks/useRequestManager';
 
 
 function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const getText2Img = useText2Img();
   const { scrollY, isScrollTop, isScrollBottom } = useScroll();
+  const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
   
   const gradientRef = useRef(null);
   const inputTextRef = useRef(null);
@@ -22,9 +24,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const imgCol2 = useRef(null);
 
   const [filter, setFilter] = useState<PlatformFilter>('All');
-  const [isLoading, setIsLoading] = useState(false);
   const [canClear, setCanClear] = useState(false);
-  const [searchResult, setSearchResult] = useState({ images: null, add: false });
   const [selectedImage, setSelectedImage] = useState<ImageData>(null);
 
   const generateText2Img = async (prompt: string) => {
@@ -57,18 +57,6 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     } else {
       gradientRef.current!.classList.add('is-active')
     }
-  }
-
-  const preRequest = () => {
-    if (isLoading) return
-    setIsLoading(true)
-  }
-
-  const postRequest = (json: ResponseJson, add: boolean) => {
-    if (json.images) {
-      setSearchResult({ images: json.images, add: add })
-    }
-    setIsLoading(false)
   }
 
   const clearInput = () => {
