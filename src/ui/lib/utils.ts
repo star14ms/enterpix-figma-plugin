@@ -66,6 +66,7 @@ export function createImgItem(
   const img = document.createElement('img');
   img.id = image.id
   img.src = image.compressedUrl
+  img.title = image.prompt
   img.addEventListener('click', async () => {
     const array = await getImg(image.compressedUrl);
     requestgenerateImageToPlugin(array, image.width, image.height)
