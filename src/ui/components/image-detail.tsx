@@ -12,18 +12,20 @@ import { img2File } from '../lib/utils';
 
 
 function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, setMenu }) {
-  const getImg2Img = useImg2Img()
+  const { getImg2Img, maxIter } = useImg2Img()
   const { isScrollTop, isScrollBottom } = useScroll()
   const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
 
   const imgCol1 = useRef(null)
   const imgCol2 = useRef(null)
 
+  const [iter, setIter] = useState(0)
   const [file, setImageDetailFile] = useState<File>(null)
   const [imageDetailMenu, setImageDetailMenu] = useState<File>(null)
 
   const generateImg2Img = async () => {
     preRequest()
+    setIter(1)
     await img2File('_' + selectedImage.id, async (newfile: File) => {
       setImageDetailFile(newfile)
       const json = await getImg2Img(newfile, filter)
@@ -33,6 +35,7 @@ function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, s
 
   const generateImg2ImgAdd = async () => {
     preRequest()
+    setIter(iter => iter + 1)
     const json = await getImg2Img(file, filter)
     postRequest(json, true)
   }
@@ -51,7 +54,7 @@ function ImageDetail({ selectedImage, setSelectedImage, filter, setFile, menu, s
   }, [])
 
   useEffect(() => {
-    if (!isScrollTop && isScrollBottom && !isLoading && menu === imageDetailMenu) {
+    if (!isScrollTop && isScrollBottom && !isLoading && menu === imageDetailMenu && iter < maxIter) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])

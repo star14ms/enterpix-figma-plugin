@@ -14,13 +14,14 @@ import { img2File } from '../lib/utils';
 
 
 function MenuImageSearch({ file, setFile, menu, setMenu }){
-  const getImg2Img = useImg2Img()
+  const { getImg2Img, maxIter } = useImg2Img()
   const { isScrollTop, isScrollBottom } = useScroll()
   const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
   
   const imgCol1 = useRef(null)
   const imgCol2 = useRef(null)
 
+  const [iter, setIter] = useState(0)
   const [filter, setFilter] = useState<PlatformFilter>('All')
   const [canClear, setCanClear] = useState(false)
   const [selectedImage, setSelectedImage] = useState<ImageData>(null)
@@ -29,16 +30,18 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
     preRequest()
     setSelectedImage(null)
     clearResult()
+    setIter(1)
     await img2File('image-uploaded', async (newfile: File) => {
       setFile(newfile)
       const json = await getImg2Img(newfile, filter)
       postRequest(json, true)
     })
-    setCanClear(true)
+    if (filter !== 'All') setCanClear(true)
   }
 
   const generateImg2ImgAdd = async () => {
     preRequest()
+    setIter(iter => iter + 1)
     const json = await getImg2Img(file, filter)
     postRequest(json, true)
   }
@@ -50,7 +53,7 @@ function MenuImageSearch({ file, setFile, menu, setMenu }){
   }
 
   useEffect(() => {
-    if (menu === 1 && !isScrollTop && isScrollBottom && !selectedImage && !isLoading) {
+    if (menu === 1 && !isScrollTop && isScrollBottom && !selectedImage && !isLoading && iter < maxIter) {
       generateImg2ImgAdd()
     }
   }, [isScrollBottom])

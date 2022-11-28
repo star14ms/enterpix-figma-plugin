@@ -71,6 +71,7 @@ const ImgCol = styled.div`
   width: 50%;
   box-sizing: border-box;
   gap: 8px;
+  margin-bottom: 8px;
 
   div {
     position: relative;

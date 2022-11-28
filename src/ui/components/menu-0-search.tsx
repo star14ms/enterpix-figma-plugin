@@ -14,7 +14,7 @@ import useRequestManager from '../hooks/useRequestManager';
 
 
 function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
-  const getText2Img = useText2Img()
+  const { getText2Img, maxIter } = useText2Img()
   const { scrollY, isScrollTop, isScrollBottom } = useScroll()
   const { isLoading, searchResult, preRequest, postRequest } = useRequestManager()
   
@@ -23,6 +23,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   const imgCol1 = useRef(null)
   const imgCol2 = useRef(null)
 
+  const [iter, setIter] = useState(0)
   const [filter, setFilter] = useState<PlatformFilter>('All')
   const [canClear, setCanClear] = useState(false)
   const [selectedImage, setSelectedImage] = useState<ImageData>(null)
@@ -32,6 +33,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
     if (prompt !== '') gradientRef.current!.classList.add('is-finish')
     setSelectedImage(null)
     clearResult()
+    setIter(1)
     setPrompt(inputTextRef.current!.value)
     const json = await getText2Img(prompt, filter)
     postRequest(json, false)
@@ -40,6 +42,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
 
   const generateText2ImgAdd = async () => {
     preRequest()
+    setIter(iter => iter + 1)
     const json = await getText2Img(prompt, filter)
     postRequest(json, true)
   }
@@ -83,7 +86,7 @@ function MenuSearch({ prompt, setPrompt, menu, setMenu, setFile }) {
   }, [filter])
 
   useEffect(() => {
-    if (menu === 0 && !isScrollTop && isScrollBottom && !selectedImage && !isLoading) {
+    if (menu === 0 && !isScrollTop && isScrollBottom && !selectedImage && !isLoading && iter < maxIter) {
       generateText2ImgAdd()
     }
   }, [isScrollBottom])
